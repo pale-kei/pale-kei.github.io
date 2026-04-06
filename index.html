@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Identity Fragment</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap');
+
+body {
+  margin: 0;
+  background: #050508;
+  color: #d1d1ff;
+  font-family: 'Courier Prime', monospace;
+  overflow-x: hidden;
+}
+
+/* noise overlay */
+.noise {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background: url('https://grainy-gradients.vercel.app/noise.svg');
+  opacity: 0.08;
+  z-index: 999;
+}
+
+/* flicker */
+@keyframes flicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
+  20%, 24%, 55% { opacity: 0.4; }
+}
+
+@keyframes drift {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+.container {
+  max-width: 800px;
+  margin: auto;
+  padding: 60px 20px;
+}
+
+.glitch {
+  font-size: 28px;
+  text-align: center;
+  animation: flicker 3s infinite;
+  letter-spacing: 2px;
+}
+
+.sub {
+  text-align: center;
+  opacity: 0.7;
+  margin-top: 10px;
+}
+
+.panel {
+  margin-top: 40px;
+  padding: 20px;
+  border: 1px solid rgba(150,150,255,0.2);
+  background: rgba(10,10,20,0.4);
+  backdrop-filter: blur(8px);
+  animation: drift 6s ease-in-out infinite;
+}
+
+h2 {
+  font-size: 16px;
+  color: #9aa0ff;
+  margin-bottom: 10px;
+}
+
+p {
+  font-size: 14px;
+  line-height: 1.6;
+  opacity: 0.85;
+}
+
+.cursor {
+  display: inline-block;
+  width: 8px;
+  height: 14px;
+  background: #b0b0ff;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+.footer {
+  text-align: center;
+  margin-top: 60px;
+  font-size: 12px;
+  opacity: 0.5;
+}
+
+.line {
+  height: 1px;
+  background: linear-gradient(to right, transparent, #6a6aff, transparent);
+  margin: 30px 0;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="noise"></div>
+
+<div class="container">
+
+  <div class="glitch">> identity.exe loading<span class="cursor"></span></div>
+  <div class="sub">fragmented personal system / unstable memory state</div>
+
+  <div class="panel">
+    <h2>/// ABOUT</h2>
+    <p>
+      I am [YOUR NAME].<br>
+      This page is not a portfolio.<br>
+      It is a trace of perception.
+    </p>
+  </div>
+
+  <div class="panel">
+    <h2>/// STATE</h2>
+    <p id="statusText">
+      syncing...
+    </p>
+  </div>
+
+  <div class="panel">
+    <h2>/// SIGNALS</h2>
+    <p>
+      - thoughts loop in recursion<br>
+      - reality feels partially rendered<br>
+      - memory is not reliable storage<br>
+    </p>
+  </div>
+
+  <div class="line"></div>
+
+  <div class="footer">
+    connection unstable • signal retained locally
+  </div>
+
+</div>
+
+<script>
+const messages = [
+  "awake but not aligned",
+  "identity fragmentation detected",
+  "memory leak in progress",
+  "observer effect active",
+  "you are not fully here"
+];
+
+let i = 0;
+setInterval(() => {
+  document.getElementById("statusText").innerText = messages[i];
+  i = (i + 1) % messages.length;
+}, 2500);
+
+// subtle background pulse
+setInterval(() => {
+  document.body.style.filter = "brightness(" + (0.95 + Math.random() * 0.1) + ")";
+}, 2000);
+</script>
+
+</body>
+</html>
