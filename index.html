@@ -3,10 +3,15 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>KEI // Interface</title>
+<title>KEI // NEURAL NODE</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+
+:root {
+  --pink: rgba(255, 90, 140, 0.8);
+  --glass: rgba(0,0,0,0.55);
+}
 
 body {
   margin: 0;
@@ -16,157 +21,253 @@ body {
   overflow-x: hidden;
 }
 
-/* subtle animated drift (VERY light) */
-@keyframes drift {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-1px); }
-  100% { transform: translateY(0px); }
-}
-
-body {
-  animation: drift 8s infinite ease-in-out;
-}
-
-/* background image (low opacity, stable) */
-body::after {
-  content: "";
+/* ===== BACKGROUND LAYER (LAIN STYLE DEPTH) ===== */
+.bg {
   position: fixed;
   inset: 0;
   background: url("YOUR_KIZU_GIF.gif") center/cover no-repeat;
   opacity: 0.12;
+  filter: contrast(1.1) brightness(0.7);
   pointer-events: none;
 }
 
-/* main container */
-#container {
-  position: relative;
-  text-align: center;
-  margin-top: 35vh;
+/* slow breathing vignette */
+.vignette {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at center, transparent 40%, black 100%);
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* subtle noise overlay */
+.noise {
+  position: fixed;
+  inset: 0;
+  background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+  opacity: 0.05;
+  pointer-events: none;
+}
+
+/* ===== MAIN LAYOUT ===== */
+#app {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  height: 100vh;
+}
+
+/* ===== SIDEBAR (SYSTEM PANEL) ===== */
+#side {
+  background: rgba(10,10,10,0.85);
+  border-right: 1px solid rgba(255,90,140,0.2);
   padding: 20px;
+  backdrop-filter: blur(10px);
 }
 
-/* main text */
-#mainText {
-  font-size: 20px;
-  transition: opacity 0.4s ease;
-  text-shadow: 0 0 10px rgba(255,80,120,0.4);
-}
-
-/* sub text */
-#subText {
+.node {
   font-size: 12px;
   opacity: 0.6;
-  margin-top: 10px;
+  margin-bottom: 20px;
 }
 
-/* floating thought box */
-#thought {
+.tab {
+  padding: 10px;
+  margin-bottom: 10px;
+  font-size: 13px;
+  cursor: pointer;
+  border-left: 2px solid transparent;
+  transition: 0.3s;
+  opacity: 0.7;
+}
+
+.tab:hover {
+  border-left: 2px solid var(--pink);
+  opacity: 1;
+  transform: translateX(3px);
+}
+
+/* ===== CONTENT AREA ===== */
+#content {
+  padding: 40px;
+  overflow-y: auto;
+}
+
+/* section transitions */
+.section {
+  display: none;
+  animation: fade 0.6s ease;
+}
+
+.section.active {
+  display: block;
+}
+
+@keyframes fade {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== TEXT SYSTEM ===== */
+h1 {
+  font-weight: 400;
+  font-size: 22px;
+  margin-bottom: 15px;
+  letter-spacing: 1px;
+  color: white;
+}
+
+p {
+  font-size: 14px;
+  line-height: 1.6;
+  opacity: 0.85;
+}
+
+/* ===== CARD SYSTEM (LAIN TERMINAL FEEL) ===== */
+.card {
+  background: var(--glass);
+  border: 1px solid rgba(255,90,140,0.15);
+  padding: 16px;
+  margin-bottom: 12px;
+  backdrop-filter: blur(8px);
+  transition: 0.4s;
+}
+
+.card:hover {
+  border-color: rgba(255,90,140,0.35);
+  transform: translateY(-2px);
+}
+
+/* ===== FLOATING STATUS ===== */
+#status {
   position: fixed;
   bottom: 20px;
-  left: 20px;
-  max-width: 240px;
-  font-size: 12px;
-  padding: 10px;
-  border: 1px solid rgba(255,80,120,0.35);
-  background: rgba(0,0,0,0.6);
+  right: 20px;
+  font-size: 11px;
+  opacity: 0.6;
+  padding: 8px 12px;
+  border: 1px solid rgba(255,90,140,0.2);
+  background: rgba(0,0,0,0.5);
   backdrop-filter: blur(8px);
-  opacity: 0;
-  transition: opacity 0.5s ease;
 }
 
-/* very rare micro-flash (NOT full screen) */
-.flash {
-  animation: flash 0.15s ease;
+/* ===== SOFT GLITCH (VERY SUBTLE) ===== */
+@keyframes glitch {
+  0%,100% { transform: translate(0); }
+  50% { transform: translate(0.3px, -0.3px); }
 }
 
-@keyframes flash {
-  0% { filter: brightness(1); }
-  50% { filter: brightness(2); }
-  100% { filter: brightness(1); }
+.glitch {
+  animation: glitch 6s infinite;
 }
 </style>
 </head>
 
 <body>
 
-<div id="container">
-  <div id="mainText">Loading interface...</div>
-  <div id="subText">system stable</div>
+<div class="bg"></div>
+<div class="vignette"></div>
+<div class="noise"></div>
+
+<div id="app">
+
+  <!-- SIDEBAR -->
+  <div id="side">
+    <div class="node">KEI // NODE ACTIVE</div>
+
+    <div class="tab" onclick="show('about')">ABOUT</div>
+    <div class="tab" onclick="show('anime')">ANIME INDEX</div>
+    <div class="tab" onclick="show('games')">GAME SYSTEMS</div>
+    <div class="tab" onclick="show('writing')">WRITING LOG</div>
+    <div class="tab" onclick="show('music')">MUSIC STATE</div>
+    <div class="tab" onclick="show('mind')">COGNITIVE MAP</div>
+    <div class="tab" onclick="show('contact')">CONTACT</div>
+  </div>
+
+  <!-- CONTENT -->
+  <div id="content">
+
+    <div id="about" class="section active">
+      <h1 class="glitch">KEI // NEURAL PROFILE</h1>
+      <div class="card">
+        <p>
+        System identity: Kei<br>
+        Status: Active observer node<br><br>
+
+        A creative profile focused on narrative structure, psychological media analysis,
+        and complex systems understanding.
+        </p>
+      </div>
+    </div>
+
+    <div id="anime" class="section">
+      <h1>ANIME MEMORY INDEX</h1>
+      <div class="card">
+        Monogatari Series / Mushishi / Lain / Evangelion / Madoka Magica / Utena / Frieren / LOGH / Zetsubou Sensei
+      </div>
+    </div>
+
+    <div id="games" class="section">
+      <h1>GAME SYSTEM PROFILE</h1>
+      <div class="card">
+        Caves of Qud / Cogmind / Dwarf Fortress / Binding of Isaac / SnowRunner / No Man’s Sky / Unreal World
+      </div>
+    </div>
+
+    <div id="writing" class="section">
+      <h1>WRITING LOG</h1>
+      <div class="card">
+        Published author. Multiple national awards in short fiction.<br><br>
+        Focus: psychological structure, layered identity, abstraction in narrative form.
+      </div>
+    </div>
+
+    <div id="music" class="section">
+      <h1>MUSIC STATE</h1>
+      <div class="card">
+        Experimental composition / ambient / emotional systems.<br>
+        Output: ongoing.
+      </div>
+    </div>
+
+    <div id="mind" class="section">
+      <h1>COGNITIVE MAP</h1>
+      <div class="card">
+        Pattern recognition: high<br>
+        Narrative abstraction: high<br>
+        Social fatigue: present<br>
+        System immersion: very high<br><br>
+
+        Note: descriptive model, not clinical classification.
+      </div>
+    </div>
+
+    <div id="contact" class="section">
+      <h1>CONTACT NODE</h1>
+      <div class="card">
+        Discord: add here<br>
+        Status: online
+      </div>
+    </div>
+
+  </div>
+
 </div>
 
-<div id="thought"></div>
+<div id="status">NODE STABLE // SYNCHRONIZED</div>
 
 <script>
-const states = [
-  {
-    main: "Identity is not fixed. It is interpreted over time.",
-    sub: "state: reflective"
-  },
-  {
-    main: "Memory changes every time it is recalled.",
-    sub: "state: drift"
-  },
-  {
-    main: "You are not becoming someone else. You are updating.",
-    sub: "state: continuity"
-  },
-  {
-    main: "Contradiction is part of structure.",
-    sub: "state: coherence"
-  },
-  {
-    main: "Nothing disappears. It only reorganizes.",
-    sub: "state: persistence"
-  }
-];
-
-const thoughts = [
-  "— still thinking.",
-  "— continue.",
-  "— you’re fine.",
-  "— observe it, don’t fight it.",
-  "— it passes through."
-];
-
-let i = 0;
-
-const mainText = document.getElementById("mainText");
-const subText = document.getElementById("subText");
-const thought = document.getElementById("thought");
-
-function updateMain() {
-  mainText.style.opacity = 0;
-
-  setTimeout(() => {
-    const s = states[i % states.length];
-    mainText.innerText = s.main;
-    subText.innerText = s.sub;
-    mainText.style.opacity = 1;
-  }, 300);
-
-  i++;
+function show(id) {
+  document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
 }
 
-setInterval(updateMain, 3500);
-updateMain();
-
-/* floating thought system */
+/* subtle system pulse (not annoying) */
 setInterval(() => {
-  thought.innerText = thoughts[Math.floor(Math.random() * thoughts.length)];
-  thought.style.opacity = 1;
-
-  setTimeout(() => {
-    thought.style.opacity = 0;
-  }, 2200);
+  const status = document.getElementById("status");
+  status.innerText = Math.random() > 0.5
+    ? "NODE STABLE // SYNCHRONIZED"
+    : "NODE ACTIVE // MONITORING";
 }, 5000);
-
-/* VERY subtle occasional flash */
-setInterval(() => {
-  document.body.classList.add("flash");
-  setTimeout(() => {
-    document.body.classList.remove("flash");
-  }, 150);
-}, 9000);
 </script>
 
 </body>
