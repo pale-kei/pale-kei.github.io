@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KEI // MEMORY ARCHIVE</title>
+<title>KEI // INTERFACE</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
@@ -13,9 +13,10 @@ body {
   background: black;
   color: white;
   font-family: Inter, sans-serif;
+  overflow-x: hidden;
 }
 
-/* background */
+/* BACKGROUND */
 .bg {
   position: fixed;
   inset: 0;
@@ -25,7 +26,7 @@ body {
   z-index: -2;
 }
 
-/* vignette */
+/* VIGNETTE */
 .vignette {
   position: fixed;
   inset: 0;
@@ -33,69 +34,87 @@ body {
   z-index: -1;
 }
 
-/* container */
+/* CONTAINER */
 .container {
   max-width: 720px;
   margin: auto;
   padding: 20px;
 }
 
-/* title */
+/* TITLE */
 .title {
   text-align: center;
   margin-top: 40px;
   font-size: 24px;
   letter-spacing: 2px;
+  transition: 0.2s;
 }
 
-/* cards */
+/* SHAFT GLITCH PULSE */
+.glitch {
+  animation: glitch 0.15s;
+}
+
+@keyframes glitch {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(2px); }
+  100% { transform: translateX(0); }
+}
+
+/* CARDS */
 .card {
   margin-top: 20px;
   padding: 15px;
   background: rgba(0,0,0,0.5);
   border: 1px solid rgba(255,80,120,0.2);
   backdrop-filter: blur(6px);
-  transition: 0.3s;
 }
 
-.card:hover {
-  transform: translateY(-2px);
-  border-color: rgba(255,80,120,0.4);
-}
-
-/* quote */
-.quote {
-  border-left: 2px solid rgba(255,80,120,0.6);
-  padding-left: 10px;
-  margin: 14px 0;
-  font-size: 13px;
+/* MAIN QUOTE DISPLAY */
+#quoteMain {
+  font-size: 16px;
+  margin-top: 30px;
+  line-height: 1.6;
   opacity: 0;
-  transform: translateY(6px);
-  transition: 0.6s ease;
+  transform: translateY(8px);
+  transition: 0.5s;
 }
 
-.quote.visible {
+#quoteMain.show {
   opacity: 1;
   transform: translateY(0);
 }
 
-.speaker {
-  font-size: 11px;
+#quoteSpeaker {
+  font-size: 12px;
+  opacity: 0;
+  margin-top: 10px;
+  transition: 0.5s;
+}
+
+#quoteSpeaker.show {
   opacity: 0.6;
 }
 
-/* subtle breathing */
-@keyframes breathe {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-2px); }
-  100% { transform: translateY(0); }
+/* FLASH CUT */
+.flash {
+  position: fixed;
+  inset: 0;
+  background: white;
+  opacity: 0;
+  pointer-events: none;
 }
 
-.card {
-  animation: breathe 7s ease-in-out infinite;
+.flash.active {
+  animation: flash 0.08s;
 }
 
-/* status */
+@keyframes flash {
+  0% { opacity: 0.7; }
+  100% { opacity: 0; }
+}
+
+/* STATUS */
 .status {
   position: fixed;
   bottom: 10px;
@@ -110,99 +129,24 @@ body {
 
 <div class="bg"></div>
 <div class="vignette"></div>
+<div class="flash" id="flash"></div>
 
 <div class="container">
 
-<div class="title">KEI // MEMORY ARCHIVE</div>
+<div class="title" id="title">KEI // MEMORY INTERFACE</div>
 
 <div class="card">
 <b>Oliver / Kei — 16</b><br><br>
 Published author. National awards.<br>
-Focused on psychological narrative, systems, and meaning.<br><br>
-Autistic + ADHD.<br>
-High abstraction. Deep analysis. Low tolerance for surface-level thinking.
+Psychological + systems-focused thinking.<br>
+Autistic + ADHD.
 </div>
 
 <div class="card">
-<b>CORE INTERESTS</b><br><br>
-Monogatari Series<br>
-Serial Experiments Lain<br>
-Evangelion<br>
-Mushishi<br>
-Frieren<br>
-Utena<br>
-Madoka Magica
-</div>
+<b>LIVE MEMORY STREAM</b>
 
-<div class="card">
-<b>GAME SYSTEMS</b><br><br>
-Caves of Qud / Cogmind / Dwarf Fortress<br>
-Binding of Isaac / SnowRunner / No Man’s Sky<br><br>
-Preference: complexity, emergence, systems depth
-</div>
-
-<div class="card">
-<b>MONOGATARI // MEMORY FRAGMENTS</b>
-
-<div class="quote">“If there is a meeting… there will be a farewell.”
-<div class="speaker">— Shinobu Oshino</div></div>
-
-<div class="quote">“If you erase sin with sin… it only multiplies.”
-<div class="speaker">— Koyomi Araragi</div></div>
-
-<div class="quote">“My feelings were never righteous.”
-<div class="speaker">— Koyomi Araragi</div></div>
-
-<div class="quote">“Averting your eyes isn’t running away.”
-<div class="speaker">— Tsubasa Hanekawa</div></div>
-
-<div class="quote">“Staying unhappy is negligence.”
-<div class="speaker">— Ougi Oshino</div></div>
-
-<div class="quote">“Not trying to be happy is cowardice.”
-<div class="speaker">— Ougi Oshino</div></div>
-
-<div class="quote">“No one can replace someone else.”
-<div class="speaker">— Suruga Kanbaru</div></div>
-
-<div class="quote">“Curiosity gathers around secrets.”
-<div class="speaker">— Hitagi Senjougahara</div></div>
-
-<div class="quote">“If you can think, you can act.”
-<div class="speaker">— Karen Araragi</div></div>
-
-<div class="quote">“Romance makes people stronger… or useless.”
-<div class="speaker">— Hitagi Senjougahara</div></div>
-
-<div class="quote">“No matter what happens… it’s still you.”
-<div class="speaker">— Tsubasa Hanekawa</div></div>
-
-<div class="quote">“To ask is shame for a moment. Not to ask is shame forever.”
-<div class="speaker">— Mayoi Hachikuji</div></div>
-
-<div class="quote">“Ignore opinions that don’t understand you.”
-<div class="speaker">— Koyomi Araragi</div></div>
-
-<div class="quote">“Some wounds never heal.”
-<div class="speaker">— Deishuu Kaiki</div></div>
-
-<div class="quote">“Most people fix mistakes instead of doing right.”
-<div class="speaker">— Ougi Oshino</div></div>
-
-<div class="quote">“You only notice pain when it becomes unbearable.”
-<div class="speaker">— Nadeko Sengoku</div></div>
-
-<div class="quote">“Kindness can be selfish.”
-<div class="speaker">— Koyomi Araragi</div></div>
-
-<div class="quote">“Being saved isn’t the same as being understood.”
-<div class="speaker">— Tsubasa Hanekawa</div></div>
-
-<div class="quote">“You chose that outcome.”
-<div class="speaker">— Ougi Oshino</div></div>
-
-<div class="quote">“People don’t change. They reveal.”
-<div class="speaker">— Deishuu Kaiki</div></div>
+<div id="quoteMain"></div>
+<div id="quoteSpeaker"></div>
 
 </div>
 
@@ -211,18 +155,58 @@ Preference: complexity, emergence, systems depth
 <div class="status" id="status">NODE ACTIVE</div>
 
 <script>
-/* scroll reveal */
-const quotes = document.querySelectorAll(".quote");
+const quotes = [
+  {text:"If there is a meeting… there will be a farewell.", speaker:"Shinobu Oshino"},
+  {text:"Averting your eyes isn’t running away.", speaker:"Tsubasa Hanekawa"},
+  {text:"Not trying to be happy is cowardice.", speaker:"Ougi Oshino"},
+  {text:"No one can replace someone else.", speaker:"Suruga Kanbaru"},
+  {text:"Romance makes people stronger… or useless.", speaker:"Hitagi Senjougahara"},
+  {text:"No matter what happens… it’s still you.", speaker:"Tsubasa Hanekawa"},
+  {text:"Kindness can be selfish.", speaker:"Koyomi Araragi"},
+  {text:"People don’t change. They reveal.", speaker:"Deishuu Kaiki"},
+  {text:"You chose that outcome.", speaker:"Ougi Oshino"},
+  {text:"Some wounds never heal.", speaker:"Deishuu Kaiki"}
+];
 
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add("visible");
-    }
-  });
-}, { threshold: 0.2 });
+let i = 0;
 
-quotes.forEach(q => observer.observe(q));
+const main = document.getElementById("quoteMain");
+const speaker = document.getElementById("quoteSpeaker");
+const flash = document.getElementById("flash");
+const title = document.getElementById("title");
+
+function nextQuote() {
+  main.classList.remove("show");
+  speaker.classList.remove("show");
+
+  setTimeout(() => {
+    const q = quotes[i];
+
+    main.innerText = `"${q.text}"`;
+    speaker.innerText = "— " + q.speaker;
+
+    main.classList.add("show");
+
+    setTimeout(() => {
+      speaker.classList.add("show");
+    }, 400);
+
+    i = (i + 1) % quotes.length;
+  }, 300);
+
+  /* shaft flash cut */
+  flash.classList.add("active");
+  setTimeout(() => flash.classList.remove("active"), 80);
+
+  /* rare title glitch */
+  if (Math.random() < 0.3) {
+    title.classList.add("glitch");
+    setTimeout(() => title.classList.remove("glitch"), 150);
+  }
+}
+
+setInterval(nextQuote, 3500);
+nextQuote();
 
 /* status rotation */
 const states = ["NODE ACTIVE", "OBSERVING", "STABLE", "SYNCHRONIZED"];
