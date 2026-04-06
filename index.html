@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KEI // SCROLL SYSTEM</title>
+<title>KEI // A QUIET SYSTEM</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400&display=swap');
 
 body {
   margin: 0;
@@ -16,16 +16,17 @@ body {
   overflow-x: hidden;
 }
 
-/* ===== BACKGROUND ===== */
+/* background */
 .bg {
   position: fixed;
   inset: 0;
   background: url("YOUR_GIF.gif") center/cover no-repeat;
-  opacity: 0.12;
-  filter: brightness(0.7);
+  opacity: 0.08;
+  filter: brightness(0.6);
   z-index: -3;
 }
 
+/* vignette */
 .vignette {
   position: fixed;
   inset: 0;
@@ -33,21 +34,7 @@ body {
   z-index: -2;
 }
 
-/* subtle moving gradient */
-.gradient {
-  position: fixed;
-  inset: 0;
-  background: linear-gradient(180deg, transparent, rgba(255,80,120,0.05));
-  animation: drift 10s infinite alternate ease-in-out;
-  z-index: -1;
-}
-
-@keyframes drift {
-  from { transform: translateY(-20px); }
-  to { transform: translateY(20px); }
-}
-
-/* ===== SCENE ===== */
+/* scene */
 .scene {
   min-height: 100vh;
   display: flex;
@@ -57,73 +44,44 @@ body {
   box-sizing: border-box;
 }
 
-/* ===== TEXT BLOCK ===== */
-.block {
-  max-width: 700px;
+/* text */
+.text {
+  max-width: 650px;
+  font-size: 16px;
+  line-height: 1.7;
   opacity: 0;
-  transform: translateY(40px);
-  transition: 0.8s ease;
+  transform: translateY(20px);
+  transition: 1.2s ease;
 }
 
-.block.visible {
+.text.visible {
   opacity: 1;
   transform: translateY(0);
 }
 
-/* ===== TITLE ===== */
-.title {
-  font-size: 28px;
-  letter-spacing: 3px;
+/* large text */
+.big {
+  font-size: 26px;
   text-align: center;
+  letter-spacing: 2px;
 }
 
-/* ===== PANEL ===== */
-.panel {
-  margin-top: 20px;
-  padding: 18px;
-  background: rgba(0,0,0,0.5);
-  border: 1px solid rgba(255,80,120,0.3);
-  backdrop-filter: blur(6px);
-}
-
-/* ===== QUOTE STYLE ===== */
+/* quote */
 .quote {
   font-size: 18px;
   line-height: 1.6;
 }
 
 .speaker {
-  margin-top: 10px;
   font-size: 12px;
   opacity: 0.6;
+  margin-top: 10px;
 }
 
-/* ===== BUTTON ===== */
-.button {
-  margin-top: 20px;
-  padding: 10px 14px;
-  border: 1px solid rgba(255,80,120,0.5);
-  background: rgba(0,0,0,0.6);
-  display: inline-block;
-  cursor: pointer;
-  transition: 0.3s;
+/* spacing */
+.space {
+  height: 40vh;
 }
-
-.button:hover {
-  background: rgba(255,80,120,0.2);
-}
-
-/* ===== FLOAT TEXT ===== */
-.float {
-  animation: float 6s ease-in-out infinite;
-}
-
-@keyframes float {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-4px); }
-  100% { transform: translateY(0); }
-}
-
 </style>
 </head>
 
@@ -131,119 +89,196 @@ body {
 
 <div class="bg"></div>
 <div class="vignette"></div>
-<div class="gradient"></div>
 
-<!-- ===== SCENE 1 ===== -->
+<!-- OPEN -->
 <div class="scene">
-  <div class="block">
-    <div class="title float">KEI // INTERFACE</div>
+  <div class="text big">
+    KEI
   </div>
 </div>
 
-<!-- ===== SCENE 2 ===== -->
 <div class="scene">
-  <div class="block panel">
-    Oliver / Kei — 16<br><br>
-    Published author.<br>
-    National award winner.<br><br>
-    I think too much.<br>
-    I notice too much.
+  <div class="text">
+    I don’t think I was meant to exist in the same way as most people.
   </div>
 </div>
 
-<!-- ===== SCENE 3 ===== -->
 <div class="scene">
-  <div class="block panel">
-    I don’t fit into most social systems.<br><br>
-    I don’t have many friends.<br><br>
-    But I understand things deeply.
+  <div class="text">
+    Not in a dramatic way.<br><br>
+    Just… structurally different.
   </div>
 </div>
 
-<!-- ===== SCENE 4 ===== -->
 <div class="scene">
-  <div class="block panel quote">
-    “If there is a meeting… there will be a farewell.”
-    <div class="speaker">— Shinobu Oshino</div>
+  <div class="text">
+    Conversations feel scripted.<br>
+    Reactions feel expected.<br>
+    Everything feels like there’s a correct version of me I’m supposed to perform.
   </div>
 </div>
 
-<!-- ===== SCENE 5 ===== -->
 <div class="scene">
-  <div class="block panel quote">
+  <div class="text">
+    I can do it.<br><br>
+    I just don’t understand why.
+  </div>
+</div>
+
+<div class="scene">
+  <div class="text">
+    I understand systems.<br>
+    I understand patterns.<br>
+    I understand people.
+  </div>
+</div>
+
+<div class="scene">
+  <div class="text">
+    But understanding something<br>
+    and belonging inside it<br>
+    are completely different things.
+  </div>
+</div>
+
+<div class="scene">
+  <div class="text">
+    I don’t have many people I can call real.
+  </div>
+</div>
+
+<div class="scene">
+  <div class="text">
+    Not because I don’t want to.<br><br>
+    But because connection feels rare.<br>
+    And forced connection feels worse than none.
+  </div>
+</div>
+
+<div class="scene">
+  <div class="text quote">
     “Averting your eyes isn’t running away.”
     <div class="speaker">— Tsubasa Hanekawa</div>
   </div>
 </div>
 
-<!-- ===== SCENE 6 ===== -->
 <div class="scene">
-  <div class="block panel">
-    I prefer complexity.<br>
-    Systems.<br>
-    Depth.<br><br>
-    Surface-level things feel empty to me.
+  <div class="text">
+    I don’t avoid things.<br><br>
+    I just see too much of them.
   </div>
 </div>
 
-<!-- ===== SCENE 7 ===== -->
 <div class="scene">
-  <div class="block panel quote">
+  <div class="text">
+    Every interaction branches into possibilities.<br>
+    Every word has weight.<br>
+    Every silence says something.
+  </div>
+</div>
+
+<div class="scene">
+  <div class="text">
+    It’s exhausting.
+  </div>
+</div>
+
+<div class="scene">
+  <div class="text">
+    So I stay inside things that make sense.
+  </div>
+</div>
+
+<div class="scene">
+  <div class="text">
+    Stories.<br>
+    Systems.<br>
+    Worlds that don’t pretend to be simple.
+  </div>
+</div>
+
+<div class="scene">
+  <div class="text">
+    I write because it’s the only place where everything can exist at once.
+  </div>
+</div>
+
+<div class="scene">
+  <div class="text quote">
     “People don’t change. They reveal.”
     <div class="speaker">— Deishuu Kaiki</div>
   </div>
 </div>
 
-<!-- ===== SCENE 8 ===== -->
 <div class="scene">
-  <div class="block panel">
-    Anime:<br><br>
-    Monogatari / Lain / Evangelion / Mushishi / Frieren
+  <div class="text">
+    Maybe that applies to me too.
   </div>
 </div>
 
-<!-- ===== SCENE 9 ===== -->
 <div class="scene">
-  <div class="block panel">
-    Games:<br><br>
-    Caves of Qud / Dwarf Fortress / Cogmind / SnowRunner
+  <div class="text">
+    I’m not becoming something.<br><br>
+    I’m just slowly revealing what was already there.
   </div>
 </div>
 
-<!-- ===== SCENE 10 ===== -->
 <div class="scene">
-  <div class="block panel quote">
+  <div class="text">
+    And sometimes I wonder if that’s the problem.
+  </div>
+</div>
+
+<div class="scene">
+  <div class="text quote">
     “Not trying to be happy is cowardice.”
     <div class="speaker">— Ougi Oshino</div>
   </div>
 </div>
 
-<!-- ===== SCENE 11 ===== -->
 <div class="scene">
-  <div class="block panel">
-    Writing is how I process everything.
+  <div class="text">
+    I don’t think that’s true.
   </div>
 </div>
 
-<!-- ===== SCENE 12 ===== -->
 <div class="scene">
-  <div class="block panel quote">
-    “Kindness can be selfish.”
-    <div class="speaker">— Koyomi Araragi</div>
+  <div class="text">
+    I think trying to be something you’re not…<br>
+    just to feel like you belong…
   </div>
 </div>
 
-<!-- ===== SCENE 13 ===== -->
 <div class="scene">
-  <div class="block panel">
-    <div class="button" onclick="nextDynamic()">Load More Memory</div>
+  <div class="text">
+    is worse.
   </div>
 </div>
+
+<div class="scene">
+  <div class="text">
+    So this is me.
+  </div>
+</div>
+
+<div class="scene">
+  <div class="text big">
+    Not fixed.<br>
+    Not simplified.<br>
+    Not explained.
+  </div>
+</div>
+
+<div class="scene">
+  <div class="text">
+    Just… here.
+  </div>
+</div>
+
+<div class="space"></div>
 
 <script>
-
-/* ===== SCROLL REVEAL ===== */
-const blocks = document.querySelectorAll(".block");
+const texts = document.querySelectorAll(".text");
 
 const observer = new IntersectionObserver(entries => {
   entries.forEach(e => {
@@ -251,23 +286,9 @@ const observer = new IntersectionObserver(entries => {
       e.target.classList.add("visible");
     }
   });
-}, { threshold: 0.2 });
+}, { threshold: 0.3 });
 
-blocks.forEach(b => observer.observe(b));
-
-/* ===== DYNAMIC QUOTES ===== */
-const dynamicQuotes = [
-["Romance makes people stronger… or useless.","Senjougahara"],
-["No one can replace someone else.","Kanbaru"],
-["You chose that outcome.","Ougi"],
-["Truth isn’t always kind.","Hanekawa"]
-];
-
-function nextDynamic(){
-  const q = dynamicQuotes[Math.floor(Math.random()*dynamicQuotes.length)];
-  alert(q[0] + " — " + q[1]);
-}
-
+texts.forEach(t => observer.observe(t));
 </script>
 
 </body>
