@@ -3,162 +3,127 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KEI // NEURAL OS</title>
+<title>KEI // SCROLL SYSTEM</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
 
-:root{
-  --accent: rgba(255,80,120,0.8);
-}
-
-body{
-  margin:0;
-  background:black;
-  color:white;
-  font-family:Inter,sans-serif;
-  overflow-x:hidden;
+body {
+  margin: 0;
+  background: black;
+  color: white;
+  font-family: Inter, sans-serif;
+  overflow-x: hidden;
 }
 
 /* ===== BACKGROUND ===== */
-.bg{
-  position:fixed;
-  inset:0;
-  background:url("YOUR_GIF.gif") center/cover no-repeat;
-  opacity:0.15;
-  filter:brightness(0.7);
-  z-index:-3;
+.bg {
+  position: fixed;
+  inset: 0;
+  background: url("YOUR_GIF.gif") center/cover no-repeat;
+  opacity: 0.12;
+  filter: brightness(0.7);
+  z-index: -3;
 }
 
-.vignette{
-  position:fixed;
-  inset:0;
-  background:radial-gradient(circle,transparent 40%,black 100%);
-  z-index:-2;
+.vignette {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle, transparent 40%, black 100%);
+  z-index: -2;
 }
 
-/* subtle parallax */
-.parallax{
-  position:fixed;
-  inset:0;
-  background:linear-gradient(transparent, rgba(255,80,120,0.05));
-  z-index:-1;
-  transform:translateY(0);
+/* subtle moving gradient */
+.gradient {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(180deg, transparent, rgba(255,80,120,0.05));
+  animation: drift 10s infinite alternate ease-in-out;
+  z-index: -1;
 }
 
-/* ===== MAIN ===== */
-.container{
-  max-width:720px;
-  margin:auto;
-  padding:20px;
+@keyframes drift {
+  from { transform: translateY(-20px); }
+  to { transform: translateY(20px); }
 }
 
-/* TITLE */
-.title{
-  text-align:center;
-  margin-top:30px;
-  font-size:24px;
-  letter-spacing:2px;
+/* ===== SCENE ===== */
+.scene {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  box-sizing: border-box;
 }
 
-/* NAV */
-.nav{
-  display:flex;
-  flex-wrap:wrap;
-  gap:6px;
-  justify-content:center;
-  margin-top:20px;
+/* ===== TEXT BLOCK ===== */
+.block {
+  max-width: 700px;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: 0.8s ease;
 }
 
-.btn{
-  padding:8px 12px;
-  font-size:12px;
-  border:1px solid var(--accent);
-  background:rgba(0,0,0,0.6);
-  cursor:pointer;
-  transition:0.3s;
+.block.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-.btn:hover{
-  background:rgba(255,80,120,0.2);
-  transform:translateY(-1px);
+/* ===== TITLE ===== */
+.title {
+  font-size: 28px;
+  letter-spacing: 3px;
+  text-align: center;
 }
 
-/* SECTION */
-.section{
-  display:none;
-  margin-top:20px;
-  animation:fade 0.5s ease;
+/* ===== PANEL ===== */
+.panel {
+  margin-top: 20px;
+  padding: 18px;
+  background: rgba(0,0,0,0.5);
+  border: 1px solid rgba(255,80,120,0.3);
+  backdrop-filter: blur(6px);
 }
 
-.section.active{
-  display:block;
+/* ===== QUOTE STYLE ===== */
+.quote {
+  font-size: 18px;
+  line-height: 1.6;
 }
 
-@keyframes fade{
-  from{opacity:0; transform:translateY(6px);}
-  to{opacity:1; transform:translateY(0);}
+.speaker {
+  margin-top: 10px;
+  font-size: 12px;
+  opacity: 0.6;
 }
 
-/* CARD */
-.card{
-  margin-top:12px;
-  padding:14px;
-  background:rgba(0,0,0,0.5);
-  border:1px solid rgba(255,80,120,0.2);
-  backdrop-filter:blur(6px);
-  transition:0.3s;
+/* ===== BUTTON ===== */
+.button {
+  margin-top: 20px;
+  padding: 10px 14px;
+  border: 1px solid rgba(255,80,120,0.5);
+  background: rgba(0,0,0,0.6);
+  display: inline-block;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
-.card:hover{
-  transform:translateY(-2px);
+.button:hover {
+  background: rgba(255,80,120,0.2);
 }
 
-/* EXPAND */
-.expand{cursor:pointer;}
-.expandContent{
-  max-height:0;
-  overflow:hidden;
-  transition:0.4s;
-  opacity:0.7;
-}
-.expand.active .expandContent{
-  max-height:500px;
-  margin-top:10px;
+/* ===== FLOAT TEXT ===== */
+.float {
+  animation: float 6s ease-in-out infinite;
 }
 
-/* QUOTE MAIN */
-#quote{
-  font-size:16px;
-  margin-top:10px;
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+  100% { transform: translateY(0); }
 }
 
-#speaker{
-  font-size:12px;
-  opacity:0.6;
-}
-
-/* ARCHIVE */
-.archive{
-  max-height:300px;
-  overflow:auto;
-}
-
-.archiveQuote{
-  font-size:13px;
-  margin:10px 0;
-  border-left:2px solid var(--accent);
-  padding-left:10px;
-}
-
-/* STATUS */
-.status{
-  position:fixed;
-  bottom:10px;
-  right:10px;
-  font-size:10px;
-  opacity:0.5;
-}
 </style>
 </head>
 
@@ -166,158 +131,142 @@ body{
 
 <div class="bg"></div>
 <div class="vignette"></div>
-<div class="parallax" id="parallax"></div>
+<div class="gradient"></div>
 
-<div class="container">
-
-<div class="title">KEI // NEURAL PROFILE</div>
-
-<div class="nav">
-  <div class="btn" onclick="show('about')">ABOUT</div>
-  <div class="btn" onclick="show('depth')">DEPTH</div>
-  <div class="btn" onclick="show('anime')">ANIME</div>
-  <div class="btn" onclick="show('games')">GAMES</div>
-  <div class="btn" onclick="show('writing')">WRITING</div>
-  <div class="btn" onclick="show('quotes')">QUOTES</div>
+<!-- ===== SCENE 1 ===== -->
+<div class="scene">
+  <div class="block">
+    <div class="title float">KEI // INTERFACE</div>
+  </div>
 </div>
 
-<!-- ABOUT -->
-<div id="about" class="section active">
-  <div class="card">
+<!-- ===== SCENE 2 ===== -->
+<div class="scene">
+  <div class="block panel">
     Oliver / Kei — 16<br><br>
-    Published author. National awards.<br>
-    Focus: psychological narrative, identity, systems.
-  </div>
-
-  <div class="card expand" onclick="toggle(this)">
-    Personal
-    <div class="expandContent">
-      Autistic + ADHD.<br><br>
-      I process things deeply and often differently from others.<br>
-      I don’t connect easily, but when I do, it matters a lot.
-    </div>
+    Published author.<br>
+    National award winner.<br><br>
+    I think too much.<br>
+    I notice too much.
   </div>
 </div>
 
-<!-- DEPTH -->
-<div id="depth" class="section">
-  <div class="card">
-    I spend most of my time analyzing, creating, and understanding systems.
-  </div>
-
-  <div class="card">
-    I prefer depth over surface-level interaction.
-  </div>
-
-  <div class="card">
-    I don’t have many friends, but I value genuine connection over quantity.
+<!-- ===== SCENE 3 ===== -->
+<div class="scene">
+  <div class="block panel">
+    I don’t fit into most social systems.<br><br>
+    I don’t have many friends.<br><br>
+    But I understand things deeply.
   </div>
 </div>
 
-<!-- ANIME -->
-<div id="anime" class="section">
-  <div class="card">
-    Monogatari Series / Lain / Evangelion / Mushishi / Frieren / Utena / Madoka
+<!-- ===== SCENE 4 ===== -->
+<div class="scene">
+  <div class="block panel quote">
+    “If there is a meeting… there will be a farewell.”
+    <div class="speaker">— Shinobu Oshino</div>
   </div>
 </div>
 
-<!-- GAMES -->
-<div id="games" class="section">
-  <div class="card">
-    Caves of Qud / Cogmind / Dwarf Fortress / Isaac / SnowRunner / No Man’s Sky
+<!-- ===== SCENE 5 ===== -->
+<div class="scene">
+  <div class="block panel quote">
+    “Averting your eyes isn’t running away.”
+    <div class="speaker">— Tsubasa Hanekawa</div>
   </div>
 </div>
 
-<!-- WRITING -->
-<div id="writing" class="section">
-  <div class="card">
-    Psychological fiction<br>
-    Identity + perception themes<br>
-    Award-winning short stories
+<!-- ===== SCENE 6 ===== -->
+<div class="scene">
+  <div class="block panel">
+    I prefer complexity.<br>
+    Systems.<br>
+    Depth.<br><br>
+    Surface-level things feel empty to me.
   </div>
 </div>
 
-<!-- QUOTES -->
-<div id="quotes" class="section">
-
-  <div class="card">
-    <div id="quote"></div>
-    <div id="speaker"></div>
+<!-- ===== SCENE 7 ===== -->
+<div class="scene">
+  <div class="block panel quote">
+    “People don’t change. They reveal.”
+    <div class="speaker">— Deishuu Kaiki</div>
   </div>
-
-  <div class="card archive" id="archive"></div>
-
 </div>
 
+<!-- ===== SCENE 8 ===== -->
+<div class="scene">
+  <div class="block panel">
+    Anime:<br><br>
+    Monogatari / Lain / Evangelion / Mushishi / Frieren
+  </div>
 </div>
 
-<div class="status" id="status">ACTIVE</div>
+<!-- ===== SCENE 9 ===== -->
+<div class="scene">
+  <div class="block panel">
+    Games:<br><br>
+    Caves of Qud / Dwarf Fortress / Cogmind / SnowRunner
+  </div>
+</div>
+
+<!-- ===== SCENE 10 ===== -->
+<div class="scene">
+  <div class="block panel quote">
+    “Not trying to be happy is cowardice.”
+    <div class="speaker">— Ougi Oshino</div>
+  </div>
+</div>
+
+<!-- ===== SCENE 11 ===== -->
+<div class="scene">
+  <div class="block panel">
+    Writing is how I process everything.
+  </div>
+</div>
+
+<!-- ===== SCENE 12 ===== -->
+<div class="scene">
+  <div class="block panel quote">
+    “Kindness can be selfish.”
+    <div class="speaker">— Koyomi Araragi</div>
+  </div>
+</div>
+
+<!-- ===== SCENE 13 ===== -->
+<div class="scene">
+  <div class="block panel">
+    <div class="button" onclick="nextDynamic()">Load More Memory</div>
+  </div>
+</div>
 
 <script>
 
-/* NAV */
-function show(id){
-  document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
-  document.getElementById(id).classList.add("active");
-}
+/* ===== SCROLL REVEAL ===== */
+const blocks = document.querySelectorAll(".block");
 
-/* EXPAND */
-function toggle(el){
-  el.classList.toggle("active");
-}
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add("visible");
+    }
+  });
+}, { threshold: 0.2 });
 
-/* PARALLAX */
-window.addEventListener("scroll",()=>{
-  document.getElementById("parallax").style.transform =
-    "translateY(" + window.scrollY*0.2 + "px)";
-});
+blocks.forEach(b => observer.observe(b));
 
-/* QUOTES (LARGE SET) */
-const quotes=[
-["If there is a meeting… there will be a farewell.","Shinobu Oshino"],
-["Averting your eyes isn’t running away.","Tsubasa Hanekawa"],
-["Not trying to be happy is cowardice.","Ougi Oshino"],
-["Kindness can be selfish.","Koyomi Araragi"],
-["People don’t change. They reveal.","Deishuu Kaiki"],
-["No one can replace someone else.","Suruga Kanbaru"],
-["Curiosity gathers around secrets.","Hitagi Senjougahara"],
-["You chose that outcome.","Ougi Oshino"],
-["Some wounds never heal.","Kaiki"],
-["You only notice pain when it becomes unbearable.","Nadeko Sengoku"],
+/* ===== DYNAMIC QUOTES ===== */
+const dynamicQuotes = [
 ["Romance makes people stronger… or useless.","Senjougahara"],
-["No matter what happens… it’s still you.","Hanekawa"],
-["If you can think, you can act.","Karen Araragi"],
-["Ignoring things won’t solve them.","Araragi"],
-["People lie to themselves first.","Kaiki"],
-["Truth isn’t always kind.","Hanekawa"],
-["You’re not alone, even if it feels like it.","Araragi"]
+["No one can replace someone else.","Kanbaru"],
+["You chose that outcome.","Ougi"],
+["Truth isn’t always kind.","Hanekawa"]
 ];
 
-/* MAIN ROTATION */
-let i=0;
-function nextQuote(){
-  document.getElementById("quote").innerText='"'+quotes[i][0]+'"';
-  document.getElementById("speaker").innerText="— "+quotes[i][1];
-  i=(i+1)%quotes.length;
+function nextDynamic(){
+  const q = dynamicQuotes[Math.floor(Math.random()*dynamicQuotes.length)];
+  alert(q[0] + " — " + q[1]);
 }
-setInterval(nextQuote,3000);
-nextQuote();
-
-/* ARCHIVE LOAD */
-const archive=document.getElementById("archive");
-quotes.forEach(q=>{
-  const div=document.createElement("div");
-  div.className="archiveQuote";
-  div.innerText='"'+q[0]+'" — '+q[1];
-  archive.appendChild(div);
-});
-
-/* STATUS */
-const states=["ACTIVE","OBSERVING","STABLE","SYNCHRONIZED"];
-setInterval(()=>{
-  document.getElementById("status").innerText=
-    states[Math.floor(Math.random()*states.length)];
-},4000);
 
 </script>
 
