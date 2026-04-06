@@ -1,242 +1,198 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KEI // KIZUMONOGATARI FILE</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>KEI // MEMORY INTERFACE</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
 
 body {
   margin: 0;
-  font-family: 'Courier Prime', monospace;
-  color: #f2eaff;
-  overflow-x: hidden;
   background: black;
+  color: white;
+  font-family: Inter, sans-serif;
+  overflow-x: hidden;
 }
 
-/* 🎞️ GIF BACKGROUND */
-.bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: url("bg.gif") center/cover no-repeat;
-  z-index: -3;
-  filter: brightness(0.5) contrast(1.2) saturate(1.2);
-  transform: scale(1.05);
-}
-
-/* 🩸 DARK OVERLAY */
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle at center, rgba(0,0,0,0.2), rgba(0,0,0,0.95));
-  z-index: -2;
-}
-
-/* 🌫 grain */
-.grain {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  background: url("https://grainy-gradients.vercel.app/noise.svg");
-  opacity: 0.06;
-  z-index: -1;
-  pointer-events: none;
-}
-
-/* container */
-.container {
-  max-width: 900px;
-  margin: auto;
-  padding: 70px 20px;
-}
-
-/* 🩸 title glitch */
-.title {
-  text-align: center;
-  font-size: 28px;
-  letter-spacing: 3px;
-  animation: flicker 3.5s infinite;
-}
-
-@keyframes flicker {
-  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
-  20%, 24%, 55% { opacity: 0.3; }
-}
-
-/* panels */
-.panel {
-  margin-top: 25px;
-  padding: 18px;
-  background: rgba(10,10,20,0.5);
-  border: 1px solid rgba(255,80,120,0.25);
-  backdrop-filter: blur(10px);
-  transform: translateY(20px);
-  opacity: 0;
-  transition: all 0.8s ease;
-}
-
-.panel.visible {
-  transform: translateY(0);
-  opacity: 1;
-}
-
-h2 {
-  font-size: 13px;
-  color: #ff4d6d;
-  letter-spacing: 2px;
-}
-
-p {
-  font-size: 13px;
-  line-height: 1.6;
-  opacity: 0.9;
-}
-
-/* tags */
-.tag {
-  display: inline-block;
-  margin: 3px;
-  padding: 3px 6px;
-  border: 1px solid rgba(255,100,140,0.4);
-  font-size: 11px;
-}
-
-/* floating movement */
-.float {
-  animation: float 6s ease-in-out infinite;
-}
-
-@keyframes float {
+/* ===== SHAFT CAMERA DRIFT ===== */
+@keyframes drift {
   0% { transform: translateY(0px); }
-  50% { transform: translateY(-6px); }
+  50% { transform: translateY(-2px); }
   100% { transform: translateY(0px); }
 }
 
-/* cursor */
-.cursor {
-  display: inline-block;
-  width: 8px;
-  height: 14px;
-  background: #ff4d6d;
-  animation: blink 1s infinite;
+body {
+  animation: drift 6s infinite ease-in-out;
 }
 
-@keyframes blink {
-  50% { opacity: 0; }
+/* ===== BACKGROUND GHOST IMAGE ===== */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: url("YOUR_KIZU_GIF.gif") center/cover no-repeat;
+  opacity: 0.18;
+  mix-blend-mode: screen;
+  pointer-events: none;
 }
 
-.footer {
+/* ===== FLICKER LAYER ===== */
+@keyframes flicker {
+  0%, 96% { opacity: 1; }
+  97% { opacity: 0.4; }
+  98% { opacity: 1; }
+  99% { opacity: 0.2; }
+  100% { opacity: 1; }
+}
+
+#flicker {
+  position: fixed;
+  inset: 0;
+  background: black;
+  animation: flicker 4s infinite;
+  pointer-events: none;
+  z-index: 999;
+}
+
+/* ===== MAIN UI ===== */
+#container {
+  position: relative;
   text-align: center;
-  margin-top: 60px;
-  font-size: 11px;
-  opacity: 0.5;
+  margin-top: 35vh;
+  padding: 20px;
+}
+
+#mainText {
+  font-size: 20px;
+  transition: opacity 0.3s;
+  text-shadow: 0 0 10px rgba(255,80,120,0.5);
+}
+
+#subText {
+  font-size: 12px;
+  opacity: 0.6;
+  margin-top: 10px;
+}
+
+/* ===== FLOATING THOUGHT BOX ===== */
+#thought {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  max-width: 250px;
+  font-size: 12px;
+  padding: 10px;
+  border: 1px solid rgba(255,80,120,0.4);
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(10px);
+  opacity: 0;
+  transition: 0.5s;
+}
+
+/* ===== SCROLL DISTORTION ===== */
+body.scroll {
+  transform: translateY(var(--y));
 }
 </style>
 </head>
 
 <body>
 
-<div class="bg"></div>
-<div class="overlay"></div>
-<div class="grain"></div>
+<div id="flicker"></div>
 
-<div class="container">
-
-  <div class="title float">KEI // KIZUMONOGATARI FILE<span class="cursor"></span></div>
-
-  <div class="panel">
-    <h2>IDENTITY</h2>
-    <p>
-      Oliver (Kei) — 16<br>
-      Writer / Observer / System thinker<br>
-      A narrative-based perception model of reality.
-    </p>
-  </div>
-
-  <div class="panel">
-    <h2>CREATIVE STATE</h2>
-    <p>
-      Published author. National award winner.<br>
-      Writing functions as structured cognition, not expression.
-    </p>
-  </div>
-
-  <div class="panel">
-    <h2>INTEREST SYSTEM</h2>
-    <p>
-      <span class="tag">Monogatari</span>
-      <span class="tag">Kizumonogatari</span>
-      <span class="tag">Lain</span>
-      <span class="tag">Evangelion</span>
-      <span class="tag">Frieren</span>
-      <span class="tag">Utena</span>
-      <span class="tag">Madoka</span>
-      <span class="tag">Mushishi</span>
-    </p>
-  </div>
-
-  <div class="panel">
-    <h2>MEDIA CORE</h2>
-    <p>
-      Memento / Caves of Qud / Cogmind / Dwarf Fortress / SnowRunner<br>
-      Preference: systemic complexity, emergent simulation, long-form depth.
-    </p>
-  </div>
-
-  <div class="panel">
-    <h2>STATUS</h2>
-    <p id="status">syncing memory layer...</p>
-  </div>
-
-  <div class="footer">
-    “Pain is just another form of recognition.” — Kizumonogatari
-  </div>
-
+<div id="container">
+  <div id="mainText">Initializing memory interface...</div>
+  <div id="subText">system: unstable</div>
 </div>
 
+<div id="thought"></div>
+
 <script>
-// 🧠 dynamic status system
+/* =========================
+   PSYCHOLOGICAL LAYER CORE
+========================= */
+
 const states = [
-  "memory fragment stabilizing",
-  "observer mode active",
-  "narrative thread detected",
-  "identity coherence fluctuating",
-  "signal locked"
+  {
+    main: "Identity is not fixed. It is a loop of observations.",
+    sub: "state: reflective recursion"
+  },
+  {
+    main: "You are not changing. You are layering.",
+    sub: "state: structural awareness"
+  },
+  {
+    main: "Memory does not store truth. It stores repetition.",
+    sub: "state: drift memory"
+  },
+  {
+    main: "The self is what remains after contradictions settle.",
+    sub: "state: unstable coherence"
+  },
+  {
+    main: "Nothing is being lost. It is only being reinterpreted.",
+    sub: "state: semantic shift"
+  }
 ];
 
+const thoughts = [
+  "— You’re overanalyzing again.",
+  "— That’s not wrong. It’s just deep recursion.",
+  "— Keep observing.",
+  "— Don’t stop mid-thought.",
+  "— This is normal for you."
+];
+
+const mainText = document.getElementById("mainText");
+const subText = document.getElementById("subText");
+const thought = document.getElementById("thought");
+
 let i = 0;
+
+/* ===== MAIN LOOP ===== */
+function update() {
+  mainText.style.opacity = 0;
+
+  setTimeout(() => {
+    const s = states[i % states.length];
+    mainText.innerText = s.main;
+    subText.innerText = s.sub;
+    mainText.style.opacity = 1;
+  }, 250);
+
+  i++;
+}
+
+setInterval(update, 2800);
+update();
+
+/* ===== FLOATING THOUGHT SYSTEM ===== */
 setInterval(() => {
-  document.getElementById("status").innerText = states[i];
-  i = (i + 1) % states.length;
-}, 2200);
+  thought.innerText = thoughts[Math.floor(Math.random() * thoughts.length)];
+  thought.style.opacity = 1;
 
-// ✨ scroll reveal animation
-const panels = document.querySelectorAll(".panel");
+  setTimeout(() => {
+    thought.style.opacity = 0;
+  }, 2000);
+}, 4500);
 
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add("visible");
-    }
-  });
-}, { threshold: 0.15 });
-
-panels.forEach(p => observer.observe(p));
-
-// 🖱 subtle parallax effect
-document.addEventListener("mousemove", (e) => {
-  const x = (e.clientX / window.innerWidth - 0.5) * 10;
-  const y = (e.clientY / window.innerHeight - 0.5) * 10;
-  document.querySelector(".bg").style.transform = `translate(${x}px, ${y}px) scale(1.05)`;
+/* ===== SCROLL DISTORTION ===== */
+window.addEventListener("scroll", () => {
+  const y = window.scrollY * 0.02;
+  document.body.style.setProperty("--y", `${Math.sin(y) * 3}px`);
 });
+
+/* ===== RANDOM FLASH CUTS ===== */
+setInterval(() => {
+  const flicker = document.getElementById("flicker");
+  flicker.style.opacity = 0.7;
+
+  setTimeout(() => {
+    flicker.style.opacity = 0;
+  }, 80);
+}, 6500);
 </script>
 
 </body>
