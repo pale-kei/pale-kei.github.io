@@ -1,163 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>KEI // NEURAL NODE</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KEI // MEMORY ARCHIVE</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
-
-:root {
-  --pink: rgba(255, 90, 140, 0.8);
-  --glass: rgba(0,0,0,0.55);
-}
 
 body {
   margin: 0;
   background: black;
   color: white;
   font-family: Inter, sans-serif;
-  overflow-x: hidden;
 }
 
-/* ===== BACKGROUND LAYER (LAIN STYLE DEPTH) ===== */
+/* background */
 .bg {
   position: fixed;
   inset: 0;
-  background: url("YOUR_KIZU_GIF.gif") center/cover no-repeat;
+  background: url("YOUR_GIF.gif") center/cover no-repeat;
   opacity: 0.12;
-  filter: contrast(1.1) brightness(0.7);
-  pointer-events: none;
+  filter: brightness(0.7);
+  z-index: -2;
 }
 
-/* slow breathing vignette */
+/* vignette */
 .vignette {
   position: fixed;
   inset: 0;
-  background: radial-gradient(circle at center, transparent 40%, black 100%);
-  opacity: 0.7;
-  pointer-events: none;
+  background: radial-gradient(circle, transparent 40%, black 100%);
+  z-index: -1;
 }
 
-/* subtle noise overlay */
-.noise {
-  position: fixed;
-  inset: 0;
-  background-image: url("https://grainy-gradients.vercel.app/noise.svg");
-  opacity: 0.05;
-  pointer-events: none;
-}
-
-/* ===== MAIN LAYOUT ===== */
-#app {
-  display: grid;
-  grid-template-columns: 260px 1fr;
-  height: 100vh;
-}
-
-/* ===== SIDEBAR (SYSTEM PANEL) ===== */
-#side {
-  background: rgba(10,10,10,0.85);
-  border-right: 1px solid rgba(255,90,140,0.2);
+/* container */
+.container {
+  max-width: 720px;
+  margin: auto;
   padding: 20px;
-  backdrop-filter: blur(10px);
 }
 
-.node {
-  font-size: 12px;
-  opacity: 0.6;
-  margin-bottom: 20px;
+/* title */
+.title {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 24px;
+  letter-spacing: 2px;
 }
 
-.tab {
-  padding: 10px;
-  margin-bottom: 10px;
-  font-size: 13px;
-  cursor: pointer;
-  border-left: 2px solid transparent;
-  transition: 0.3s;
-  opacity: 0.7;
-}
-
-.tab:hover {
-  border-left: 2px solid var(--pink);
-  opacity: 1;
-  transform: translateX(3px);
-}
-
-/* ===== CONTENT AREA ===== */
-#content {
-  padding: 40px;
-  overflow-y: auto;
-}
-
-/* section transitions */
-.section {
-  display: none;
-  animation: fade 0.6s ease;
-}
-
-.section.active {
-  display: block;
-}
-
-@keyframes fade {
-  from { opacity: 0; transform: translateY(6px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* ===== TEXT SYSTEM ===== */
-h1 {
-  font-weight: 400;
-  font-size: 22px;
-  margin-bottom: 15px;
-  letter-spacing: 1px;
-  color: white;
-}
-
-p {
-  font-size: 14px;
-  line-height: 1.6;
-  opacity: 0.85;
-}
-
-/* ===== CARD SYSTEM (LAIN TERMINAL FEEL) ===== */
+/* cards */
 .card {
-  background: var(--glass);
-  border: 1px solid rgba(255,90,140,0.15);
-  padding: 16px;
-  margin-bottom: 12px;
-  backdrop-filter: blur(8px);
-  transition: 0.4s;
+  margin-top: 20px;
+  padding: 15px;
+  background: rgba(0,0,0,0.5);
+  border: 1px solid rgba(255,80,120,0.2);
+  backdrop-filter: blur(6px);
+  transition: 0.3s;
 }
 
 .card:hover {
-  border-color: rgba(255,90,140,0.35);
   transform: translateY(-2px);
+  border-color: rgba(255,80,120,0.4);
 }
 
-/* ===== FLOATING STATUS ===== */
-#status {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
+/* quote */
+.quote {
+  border-left: 2px solid rgba(255,80,120,0.6);
+  padding-left: 10px;
+  margin: 14px 0;
+  font-size: 13px;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: 0.6s ease;
+}
+
+.quote.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.speaker {
   font-size: 11px;
   opacity: 0.6;
-  padding: 8px 12px;
-  border: 1px solid rgba(255,90,140,0.2);
-  background: rgba(0,0,0,0.5);
-  backdrop-filter: blur(8px);
 }
 
-/* ===== SOFT GLITCH (VERY SUBTLE) ===== */
-@keyframes glitch {
-  0%,100% { transform: translate(0); }
-  50% { transform: translate(0.3px, -0.3px); }
+/* subtle breathing */
+@keyframes breathe {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+  100% { transform: translateY(0); }
 }
 
-.glitch {
-  animation: glitch 6s infinite;
+.card {
+  animation: breathe 7s ease-in-out infinite;
+}
+
+/* status */
+.status {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  font-size: 10px;
+  opacity: 0.5;
 }
 </style>
 </head>
@@ -166,108 +110,127 @@ p {
 
 <div class="bg"></div>
 <div class="vignette"></div>
-<div class="noise"></div>
 
-<div id="app">
+<div class="container">
 
-  <!-- SIDEBAR -->
-  <div id="side">
-    <div class="node">KEI // NODE ACTIVE</div>
+<div class="title">KEI // MEMORY ARCHIVE</div>
 
-    <div class="tab" onclick="show('about')">ABOUT</div>
-    <div class="tab" onclick="show('anime')">ANIME INDEX</div>
-    <div class="tab" onclick="show('games')">GAME SYSTEMS</div>
-    <div class="tab" onclick="show('writing')">WRITING LOG</div>
-    <div class="tab" onclick="show('music')">MUSIC STATE</div>
-    <div class="tab" onclick="show('mind')">COGNITIVE MAP</div>
-    <div class="tab" onclick="show('contact')">CONTACT</div>
-  </div>
+<div class="card">
+<b>Oliver / Kei — 16</b><br><br>
+Published author. National awards.<br>
+Focused on psychological narrative, systems, and meaning.<br><br>
+Autistic + ADHD.<br>
+High abstraction. Deep analysis. Low tolerance for surface-level thinking.
+</div>
 
-  <!-- CONTENT -->
-  <div id="content">
+<div class="card">
+<b>CORE INTERESTS</b><br><br>
+Monogatari Series<br>
+Serial Experiments Lain<br>
+Evangelion<br>
+Mushishi<br>
+Frieren<br>
+Utena<br>
+Madoka Magica
+</div>
 
-    <div id="about" class="section active">
-      <h1 class="glitch">KEI // NEURAL PROFILE</h1>
-      <div class="card">
-        <p>
-        System identity: Kei<br>
-        Status: Active observer node<br><br>
+<div class="card">
+<b>GAME SYSTEMS</b><br><br>
+Caves of Qud / Cogmind / Dwarf Fortress<br>
+Binding of Isaac / SnowRunner / No Man’s Sky<br><br>
+Preference: complexity, emergence, systems depth
+</div>
 
-        A creative profile focused on narrative structure, psychological media analysis,
-        and complex systems understanding.
-        </p>
-      </div>
-    </div>
+<div class="card">
+<b>MONOGATARI // MEMORY FRAGMENTS</b>
 
-    <div id="anime" class="section">
-      <h1>ANIME MEMORY INDEX</h1>
-      <div class="card">
-        Monogatari Series / Mushishi / Lain / Evangelion / Madoka Magica / Utena / Frieren / LOGH / Zetsubou Sensei
-      </div>
-    </div>
+<div class="quote">“If there is a meeting… there will be a farewell.”
+<div class="speaker">— Shinobu Oshino</div></div>
 
-    <div id="games" class="section">
-      <h1>GAME SYSTEM PROFILE</h1>
-      <div class="card">
-        Caves of Qud / Cogmind / Dwarf Fortress / Binding of Isaac / SnowRunner / No Man’s Sky / Unreal World
-      </div>
-    </div>
+<div class="quote">“If you erase sin with sin… it only multiplies.”
+<div class="speaker">— Koyomi Araragi</div></div>
 
-    <div id="writing" class="section">
-      <h1>WRITING LOG</h1>
-      <div class="card">
-        Published author. Multiple national awards in short fiction.<br><br>
-        Focus: psychological structure, layered identity, abstraction in narrative form.
-      </div>
-    </div>
+<div class="quote">“My feelings were never righteous.”
+<div class="speaker">— Koyomi Araragi</div></div>
 
-    <div id="music" class="section">
-      <h1>MUSIC STATE</h1>
-      <div class="card">
-        Experimental composition / ambient / emotional systems.<br>
-        Output: ongoing.
-      </div>
-    </div>
+<div class="quote">“Averting your eyes isn’t running away.”
+<div class="speaker">— Tsubasa Hanekawa</div></div>
 
-    <div id="mind" class="section">
-      <h1>COGNITIVE MAP</h1>
-      <div class="card">
-        Pattern recognition: high<br>
-        Narrative abstraction: high<br>
-        Social fatigue: present<br>
-        System immersion: very high<br><br>
+<div class="quote">“Staying unhappy is negligence.”
+<div class="speaker">— Ougi Oshino</div></div>
 
-        Note: descriptive model, not clinical classification.
-      </div>
-    </div>
+<div class="quote">“Not trying to be happy is cowardice.”
+<div class="speaker">— Ougi Oshino</div></div>
 
-    <div id="contact" class="section">
-      <h1>CONTACT NODE</h1>
-      <div class="card">
-        Discord: add here<br>
-        Status: online
-      </div>
-    </div>
+<div class="quote">“No one can replace someone else.”
+<div class="speaker">— Suruga Kanbaru</div></div>
 
-  </div>
+<div class="quote">“Curiosity gathers around secrets.”
+<div class="speaker">— Hitagi Senjougahara</div></div>
+
+<div class="quote">“If you can think, you can act.”
+<div class="speaker">— Karen Araragi</div></div>
+
+<div class="quote">“Romance makes people stronger… or useless.”
+<div class="speaker">— Hitagi Senjougahara</div></div>
+
+<div class="quote">“No matter what happens… it’s still you.”
+<div class="speaker">— Tsubasa Hanekawa</div></div>
+
+<div class="quote">“To ask is shame for a moment. Not to ask is shame forever.”
+<div class="speaker">— Mayoi Hachikuji</div></div>
+
+<div class="quote">“Ignore opinions that don’t understand you.”
+<div class="speaker">— Koyomi Araragi</div></div>
+
+<div class="quote">“Some wounds never heal.”
+<div class="speaker">— Deishuu Kaiki</div></div>
+
+<div class="quote">“Most people fix mistakes instead of doing right.”
+<div class="speaker">— Ougi Oshino</div></div>
+
+<div class="quote">“You only notice pain when it becomes unbearable.”
+<div class="speaker">— Nadeko Sengoku</div></div>
+
+<div class="quote">“Kindness can be selfish.”
+<div class="speaker">— Koyomi Araragi</div></div>
+
+<div class="quote">“Being saved isn’t the same as being understood.”
+<div class="speaker">— Tsubasa Hanekawa</div></div>
+
+<div class="quote">“You chose that outcome.”
+<div class="speaker">— Ougi Oshino</div></div>
+
+<div class="quote">“People don’t change. They reveal.”
+<div class="speaker">— Deishuu Kaiki</div></div>
 
 </div>
 
-<div id="status">NODE STABLE // SYNCHRONIZED</div>
+</div>
+
+<div class="status" id="status">NODE ACTIVE</div>
 
 <script>
-function show(id) {
-  document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
-  document.getElementById(id).classList.add("active");
-}
+/* scroll reveal */
+const quotes = document.querySelectorAll(".quote");
 
-/* subtle system pulse (not annoying) */
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add("visible");
+    }
+  });
+}, { threshold: 0.2 });
+
+quotes.forEach(q => observer.observe(q));
+
+/* status rotation */
+const states = ["NODE ACTIVE", "OBSERVING", "STABLE", "SYNCHRONIZED"];
+
 setInterval(() => {
-  const status = document.getElementById("status");
-  status.innerText = Math.random() > 0.5
-    ? "NODE STABLE // SYNCHRONIZED"
-    : "NODE ACTIVE // MONITORING";
-}, 5000);
+  document.getElementById("status").innerText =
+    states[Math.floor(Math.random() * states.length)];
+}, 4000);
 </script>
 
 </body>
