@@ -3,152 +3,161 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KEI // SHAFT NODE</title>
+<title>KEI // NEURAL OS</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
 
-:root {
+:root{
   --accent: rgba(255,80,120,0.8);
 }
 
-body {
-  margin: 0;
-  background: black;
-  color: white;
-  font-family: Inter, sans-serif;
-  overflow-x: hidden;
+body{
+  margin:0;
+  background:black;
+  color:white;
+  font-family:Inter,sans-serif;
+  overflow-x:hidden;
 }
 
-/* ===== BACKGROUND LAYERS ===== */
-.bg {
-  position: fixed;
-  inset: 0;
-  background: url("YOUR_GIF.gif") center/cover no-repeat;
-  opacity: 0.15;
-  filter: brightness(0.7);
-  z-index: -3;
+/* ===== BACKGROUND ===== */
+.bg{
+  position:fixed;
+  inset:0;
+  background:url("YOUR_GIF.gif") center/cover no-repeat;
+  opacity:0.15;
+  filter:brightness(0.7);
+  z-index:-3;
 }
 
-.vignette {
-  position: fixed;
-  inset: 0;
-  background: radial-gradient(circle, transparent 40%, black 100%);
-  z-index: -2;
+.vignette{
+  position:fixed;
+  inset:0;
+  background:radial-gradient(circle,transparent 40%,black 100%);
+  z-index:-2;
 }
 
-/* moving grain */
-.noise {
-  position: fixed;
-  inset: 0;
-  background-image: url("https://grainy-gradients.vercel.app/noise.svg");
-  opacity: 0.06;
-  animation: noiseMove 2s infinite linear;
-  z-index: -1;
-}
-
-@keyframes noiseMove {
-  0% { transform: translate(0,0); }
-  100% { transform: translate(-20px,20px); }
+/* subtle parallax */
+.parallax{
+  position:fixed;
+  inset:0;
+  background:linear-gradient(transparent, rgba(255,80,120,0.05));
+  z-index:-1;
+  transform:translateY(0);
 }
 
 /* ===== MAIN ===== */
-.container {
-  max-width: 750px;
-  margin: auto;
-  padding: 20px;
+.container{
+  max-width:720px;
+  margin:auto;
+  padding:20px;
 }
 
 /* TITLE */
-.title {
-  text-align: center;
-  margin-top: 50px;
-  font-size: 26px;
-  letter-spacing: 3px;
+.title{
+  text-align:center;
+  margin-top:30px;
+  font-size:24px;
+  letter-spacing:2px;
 }
 
-/* ===== CARDS ===== */
-.card {
-  margin-top: 25px;
-  padding: 16px;
-  background: rgba(0,0,0,0.55);
-  border: 1px solid rgba(255,80,120,0.25);
-  backdrop-filter: blur(8px);
-  transform: translateY(10px);
-  opacity: 0;
-  transition: 0.6s ease;
+/* NAV */
+.nav{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  justify-content:center;
+  margin-top:20px;
 }
 
-.card.visible {
-  transform: translateY(0);
-  opacity: 1;
+.btn{
+  padding:8px 12px;
+  font-size:12px;
+  border:1px solid var(--accent);
+  background:rgba(0,0,0,0.6);
+  cursor:pointer;
+  transition:0.3s;
 }
 
-/* hover micro movement */
-.card:hover {
-  transform: translateY(-3px);
+.btn:hover{
+  background:rgba(255,80,120,0.2);
+  transform:translateY(-1px);
 }
 
-/* ===== QUOTE ENGINE ===== */
-#quoteMain {
-  font-size: 17px;
-  line-height: 1.6;
-  margin-top: 10px;
-  opacity: 0;
-  transform: translateY(10px);
-  transition: 0.5s;
+/* SECTION */
+.section{
+  display:none;
+  margin-top:20px;
+  animation:fade 0.5s ease;
 }
 
-#quoteMain.show {
-  opacity: 1;
-  transform: translateY(0);
+.section.active{
+  display:block;
 }
 
-#quoteSpeaker {
-  font-size: 12px;
-  opacity: 0;
-  margin-top: 8px;
-  transition: 0.5s;
+@keyframes fade{
+  from{opacity:0; transform:translateY(6px);}
+  to{opacity:1; transform:translateY(0);}
 }
 
-#quoteSpeaker.show {
-  opacity: 0.6;
+/* CARD */
+.card{
+  margin-top:12px;
+  padding:14px;
+  background:rgba(0,0,0,0.5);
+  border:1px solid rgba(255,80,120,0.2);
+  backdrop-filter:blur(6px);
+  transition:0.3s;
 }
 
-/* archive quotes */
-.archiveQuote {
-  font-size: 13px;
-  margin: 12px 0;
-  border-left: 2px solid var(--accent);
-  padding-left: 10px;
-  opacity: 0.85;
+.card:hover{
+  transform:translateY(-2px);
 }
 
-/* ===== SHAFT FLASH CUT ===== */
-.flash {
-  position: fixed;
-  inset: 0;
-  background: white;
-  opacity: 0;
-  pointer-events: none;
+/* EXPAND */
+.expand{cursor:pointer;}
+.expandContent{
+  max-height:0;
+  overflow:hidden;
+  transition:0.4s;
+  opacity:0.7;
+}
+.expand.active .expandContent{
+  max-height:500px;
+  margin-top:10px;
 }
 
-.flash.active {
-  animation: flash 0.08s;
+/* QUOTE MAIN */
+#quote{
+  font-size:16px;
+  margin-top:10px;
 }
 
-@keyframes flash {
-  0% { opacity: 0.7; }
-  100% { opacity: 0; }
+#speaker{
+  font-size:12px;
+  opacity:0.6;
 }
 
-/* ===== STATUS ===== */
-.status {
-  position: fixed;
-  bottom: 10px;
-  right: 10px;
-  font-size: 10px;
-  opacity: 0.5;
+/* ARCHIVE */
+.archive{
+  max-height:300px;
+  overflow:auto;
+}
+
+.archiveQuote{
+  font-size:13px;
+  margin:10px 0;
+  border-left:2px solid var(--accent);
+  padding-left:10px;
+}
+
+/* STATUS */
+.status{
+  position:fixed;
+  bottom:10px;
+  right:10px;
+  font-size:10px;
+  opacity:0.5;
 }
 </style>
 </head>
@@ -157,115 +166,159 @@ body {
 
 <div class="bg"></div>
 <div class="vignette"></div>
-<div class="noise"></div>
-<div class="flash" id="flash"></div>
+<div class="parallax" id="parallax"></div>
 
 <div class="container">
 
-<div class="title">KEI // SHAFT PROFILE</div>
+<div class="title">KEI // NEURAL PROFILE</div>
 
-<div class="card">
-<b>IDENTITY</b><br><br>
-Oliver / Kei — 16<br><br>
-Published author. National awards.<br>
-Focus: psychological narrative, identity systems, abstraction.<br><br>
-Autistic + ADHD.<br>
-High pattern recognition. Deep analysis.
+<div class="nav">
+  <div class="btn" onclick="show('about')">ABOUT</div>
+  <div class="btn" onclick="show('depth')">DEPTH</div>
+  <div class="btn" onclick="show('anime')">ANIME</div>
+  <div class="btn" onclick="show('games')">GAMES</div>
+  <div class="btn" onclick="show('writing')">WRITING</div>
+  <div class="btn" onclick="show('quotes')">QUOTES</div>
 </div>
 
-<div class="card">
-<b>CORE MEDIA</b><br><br>
-Monogatari Series / Serial Experiments Lain / Evangelion / Mushishi / Frieren / Utena / Madoka
+<!-- ABOUT -->
+<div id="about" class="section active">
+  <div class="card">
+    Oliver / Kei — 16<br><br>
+    Published author. National awards.<br>
+    Focus: psychological narrative, identity, systems.
+  </div>
+
+  <div class="card expand" onclick="toggle(this)">
+    Personal
+    <div class="expandContent">
+      Autistic + ADHD.<br><br>
+      I process things deeply and often differently from others.<br>
+      I don’t connect easily, but when I do, it matters a lot.
+    </div>
+  </div>
 </div>
 
-<div class="card">
-<b>GAME SYSTEMS</b><br><br>
-Caves of Qud / Cogmind / Dwarf Fortress / Isaac / SnowRunner / NMS<br>
-Focus: simulation + emergence
+<!-- DEPTH -->
+<div id="depth" class="section">
+  <div class="card">
+    I spend most of my time analyzing, creating, and understanding systems.
+  </div>
+
+  <div class="card">
+    I prefer depth over surface-level interaction.
+  </div>
+
+  <div class="card">
+    I don’t have many friends, but I value genuine connection over quantity.
+  </div>
 </div>
 
-<div class="card">
-<b>LIVE QUOTE STREAM</b>
-<div id="quoteMain"></div>
-<div id="quoteSpeaker"></div>
+<!-- ANIME -->
+<div id="anime" class="section">
+  <div class="card">
+    Monogatari Series / Lain / Evangelion / Mushishi / Frieren / Utena / Madoka
+  </div>
 </div>
 
-<div class="card">
-<b>ARCHIVE FRAGMENTS</b>
+<!-- GAMES -->
+<div id="games" class="section">
+  <div class="card">
+    Caves of Qud / Cogmind / Dwarf Fortress / Isaac / SnowRunner / No Man’s Sky
+  </div>
+</div>
 
-<div class="archiveQuote">“If there is a meeting… there will be a farewell.” — Shinobu Oshino</div>
-<div class="archiveQuote">“Averting your eyes isn’t running away.” — Tsubasa Hanekawa</div>
-<div class="archiveQuote">“Not trying to be happy is cowardice.” — Ougi Oshino</div>
-<div class="archiveQuote">“Romance makes people stronger… or useless.” — Hitagi Senjougahara</div>
-<div class="archiveQuote">“Kindness can be selfish.” — Koyomi Araragi</div>
-<div class="archiveQuote">“People don’t change. They reveal.” — Deishuu Kaiki</div>
-<div class="archiveQuote">“You chose that outcome.” — Ougi Oshino</div>
-<div class="archiveQuote">“Some wounds never heal.” — Deishuu Kaiki</div>
+<!-- WRITING -->
+<div id="writing" class="section">
+  <div class="card">
+    Psychological fiction<br>
+    Identity + perception themes<br>
+    Award-winning short stories
+  </div>
+</div>
+
+<!-- QUOTES -->
+<div id="quotes" class="section">
+
+  <div class="card">
+    <div id="quote"></div>
+    <div id="speaker"></div>
+  </div>
+
+  <div class="card archive" id="archive"></div>
 
 </div>
 
 </div>
 
-<div class="status" id="status">NODE ACTIVE</div>
+<div class="status" id="status">ACTIVE</div>
 
 <script>
-/* ===== CARD REVEAL ===== */
-const cards = document.querySelectorAll(".card");
 
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add("visible");
-    }
-  });
-}, { threshold: 0.15 });
-
-cards.forEach(c => observer.observe(c));
-
-/* ===== QUOTE SYSTEM ===== */
-const quotes = [
-  ["If there is a meeting… there will be a farewell.", "Shinobu Oshino"],
-  ["Averting your eyes isn’t running away.", "Tsubasa Hanekawa"],
-  ["Not trying to be happy is cowardice.", "Ougi Oshino"],
-  ["Kindness can be selfish.", "Koyomi Araragi"],
-  ["People don’t change. They reveal.", "Deishuu Kaiki"],
-  ["Romance makes people stronger… or useless.", "Hitagi Senjougahara"]
-];
-
-let i = 0;
-const main = document.getElementById("quoteMain");
-const speaker = document.getElementById("quoteSpeaker");
-const flash = document.getElementById("flash");
-
-function nextQuote() {
-  main.classList.remove("show");
-  speaker.classList.remove("show");
-
-  setTimeout(() => {
-    main.innerText = `"${quotes[i][0]}"`;
-    speaker.innerText = "— " + quotes[i][1];
-
-    main.classList.add("show");
-
-    setTimeout(() => speaker.classList.add("show"), 400);
-
-    i = (i + 1) % quotes.length;
-  }, 250);
-
-  flash.classList.add("active");
-  setTimeout(() => flash.classList.remove("active"), 80);
+/* NAV */
+function show(id){
+  document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
 }
 
-setInterval(nextQuote, 3500);
+/* EXPAND */
+function toggle(el){
+  el.classList.toggle("active");
+}
+
+/* PARALLAX */
+window.addEventListener("scroll",()=>{
+  document.getElementById("parallax").style.transform =
+    "translateY(" + window.scrollY*0.2 + "px)";
+});
+
+/* QUOTES (LARGE SET) */
+const quotes=[
+["If there is a meeting… there will be a farewell.","Shinobu Oshino"],
+["Averting your eyes isn’t running away.","Tsubasa Hanekawa"],
+["Not trying to be happy is cowardice.","Ougi Oshino"],
+["Kindness can be selfish.","Koyomi Araragi"],
+["People don’t change. They reveal.","Deishuu Kaiki"],
+["No one can replace someone else.","Suruga Kanbaru"],
+["Curiosity gathers around secrets.","Hitagi Senjougahara"],
+["You chose that outcome.","Ougi Oshino"],
+["Some wounds never heal.","Kaiki"],
+["You only notice pain when it becomes unbearable.","Nadeko Sengoku"],
+["Romance makes people stronger… or useless.","Senjougahara"],
+["No matter what happens… it’s still you.","Hanekawa"],
+["If you can think, you can act.","Karen Araragi"],
+["Ignoring things won’t solve them.","Araragi"],
+["People lie to themselves first.","Kaiki"],
+["Truth isn’t always kind.","Hanekawa"],
+["You’re not alone, even if it feels like it.","Araragi"]
+];
+
+/* MAIN ROTATION */
+let i=0;
+function nextQuote(){
+  document.getElementById("quote").innerText='"'+quotes[i][0]+'"';
+  document.getElementById("speaker").innerText="— "+quotes[i][1];
+  i=(i+1)%quotes.length;
+}
+setInterval(nextQuote,3000);
 nextQuote();
 
-/* ===== STATUS ===== */
-const states = ["NODE ACTIVE","OBSERVING","STABLE","SYNCHRONIZED"];
+/* ARCHIVE LOAD */
+const archive=document.getElementById("archive");
+quotes.forEach(q=>{
+  const div=document.createElement("div");
+  div.className="archiveQuote";
+  div.innerText='"'+q[0]+'" — '+q[1];
+  archive.appendChild(div);
+});
 
-setInterval(() => {
-  document.getElementById("status").innerText =
+/* STATUS */
+const states=["ACTIVE","OBSERVING","STABLE","SYNCHRONIZED"];
+setInterval(()=>{
+  document.getElementById("status").innerText=
     states[Math.floor(Math.random()*states.length)];
-}, 4000);
+},4000);
+
 </script>
 
 </body>
