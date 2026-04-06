@@ -3,10 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KEI // INTERFACE</title>
+<title>KEI // SHAFT NODE</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+
+:root {
+  --accent: rgba(255,80,120,0.8);
+}
 
 body {
   margin: 0;
@@ -16,27 +20,41 @@ body {
   overflow-x: hidden;
 }
 
-/* BACKGROUND */
+/* ===== BACKGROUND LAYERS ===== */
 .bg {
   position: fixed;
   inset: 0;
   background: url("YOUR_GIF.gif") center/cover no-repeat;
-  opacity: 0.12;
+  opacity: 0.15;
   filter: brightness(0.7);
-  z-index: -2;
+  z-index: -3;
 }
 
-/* VIGNETTE */
 .vignette {
   position: fixed;
   inset: 0;
   background: radial-gradient(circle, transparent 40%, black 100%);
+  z-index: -2;
+}
+
+/* moving grain */
+.noise {
+  position: fixed;
+  inset: 0;
+  background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+  opacity: 0.06;
+  animation: noiseMove 2s infinite linear;
   z-index: -1;
 }
 
-/* CONTAINER */
+@keyframes noiseMove {
+  0% { transform: translate(0,0); }
+  100% { transform: translate(-20px,20px); }
+}
+
+/* ===== MAIN ===== */
 .container {
-  max-width: 720px;
+  max-width: 750px;
   margin: auto;
   padding: 20px;
 }
@@ -44,39 +62,40 @@ body {
 /* TITLE */
 .title {
   text-align: center;
-  margin-top: 40px;
-  font-size: 24px;
-  letter-spacing: 2px;
-  transition: 0.2s;
+  margin-top: 50px;
+  font-size: 26px;
+  letter-spacing: 3px;
 }
 
-/* SHAFT GLITCH PULSE */
-.glitch {
-  animation: glitch 0.15s;
-}
-
-@keyframes glitch {
-  0% { transform: translateX(0); }
-  50% { transform: translateX(2px); }
-  100% { transform: translateX(0); }
-}
-
-/* CARDS */
+/* ===== CARDS ===== */
 .card {
-  margin-top: 20px;
-  padding: 15px;
-  background: rgba(0,0,0,0.5);
-  border: 1px solid rgba(255,80,120,0.2);
-  backdrop-filter: blur(6px);
+  margin-top: 25px;
+  padding: 16px;
+  background: rgba(0,0,0,0.55);
+  border: 1px solid rgba(255,80,120,0.25);
+  backdrop-filter: blur(8px);
+  transform: translateY(10px);
+  opacity: 0;
+  transition: 0.6s ease;
 }
 
-/* MAIN QUOTE DISPLAY */
+.card.visible {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* hover micro movement */
+.card:hover {
+  transform: translateY(-3px);
+}
+
+/* ===== QUOTE ENGINE ===== */
 #quoteMain {
-  font-size: 16px;
-  margin-top: 30px;
+  font-size: 17px;
   line-height: 1.6;
+  margin-top: 10px;
   opacity: 0;
-  transform: translateY(8px);
+  transform: translateY(10px);
   transition: 0.5s;
 }
 
@@ -88,7 +107,7 @@ body {
 #quoteSpeaker {
   font-size: 12px;
   opacity: 0;
-  margin-top: 10px;
+  margin-top: 8px;
   transition: 0.5s;
 }
 
@@ -96,7 +115,16 @@ body {
   opacity: 0.6;
 }
 
-/* FLASH CUT */
+/* archive quotes */
+.archiveQuote {
+  font-size: 13px;
+  margin: 12px 0;
+  border-left: 2px solid var(--accent);
+  padding-left: 10px;
+  opacity: 0.85;
+}
+
+/* ===== SHAFT FLASH CUT ===== */
 .flash {
   position: fixed;
   inset: 0;
@@ -114,7 +142,7 @@ body {
   100% { opacity: 0; }
 }
 
-/* STATUS */
+/* ===== STATUS ===== */
 .status {
   position: fixed;
   bottom: 10px;
@@ -129,24 +157,50 @@ body {
 
 <div class="bg"></div>
 <div class="vignette"></div>
+<div class="noise"></div>
 <div class="flash" id="flash"></div>
 
 <div class="container">
 
-<div class="title" id="title">KEI // MEMORY INTERFACE</div>
+<div class="title">KEI // SHAFT PROFILE</div>
 
 <div class="card">
-<b>Oliver / Kei — 16</b><br><br>
+<b>IDENTITY</b><br><br>
+Oliver / Kei — 16<br><br>
 Published author. National awards.<br>
-Psychological + systems-focused thinking.<br>
-Autistic + ADHD.
+Focus: psychological narrative, identity systems, abstraction.<br><br>
+Autistic + ADHD.<br>
+High pattern recognition. Deep analysis.
 </div>
 
 <div class="card">
-<b>LIVE MEMORY STREAM</b>
+<b>CORE MEDIA</b><br><br>
+Monogatari Series / Serial Experiments Lain / Evangelion / Mushishi / Frieren / Utena / Madoka
+</div>
 
+<div class="card">
+<b>GAME SYSTEMS</b><br><br>
+Caves of Qud / Cogmind / Dwarf Fortress / Isaac / SnowRunner / NMS<br>
+Focus: simulation + emergence
+</div>
+
+<div class="card">
+<b>LIVE QUOTE STREAM</b>
 <div id="quoteMain"></div>
 <div id="quoteSpeaker"></div>
+</div>
+
+<div class="card">
+<b>ARCHIVE FRAGMENTS</b>
+
+<div class="archiveQuote">“If there is a meeting… there will be a farewell.” — Shinobu Oshino</div>
+<div class="archiveQuote">“Averting your eyes isn’t running away.” — Tsubasa Hanekawa</div>
+<div class="archiveQuote">“Not trying to be happy is cowardice.” — Ougi Oshino</div>
+<div class="archiveQuote">“Romance makes people stronger… or useless.” — Hitagi Senjougahara</div>
+<div class="archiveQuote">“Kindness can be selfish.” — Koyomi Araragi</div>
+<div class="archiveQuote">“People don’t change. They reveal.” — Deishuu Kaiki</div>
+<div class="archiveQuote">“You chose that outcome.” — Ougi Oshino</div>
+<div class="archiveQuote">“Some wounds never heal.” — Deishuu Kaiki</div>
 
 </div>
 
@@ -155,65 +209,62 @@ Autistic + ADHD.
 <div class="status" id="status">NODE ACTIVE</div>
 
 <script>
+/* ===== CARD REVEAL ===== */
+const cards = document.querySelectorAll(".card");
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add("visible");
+    }
+  });
+}, { threshold: 0.15 });
+
+cards.forEach(c => observer.observe(c));
+
+/* ===== QUOTE SYSTEM ===== */
 const quotes = [
-  {text:"If there is a meeting… there will be a farewell.", speaker:"Shinobu Oshino"},
-  {text:"Averting your eyes isn’t running away.", speaker:"Tsubasa Hanekawa"},
-  {text:"Not trying to be happy is cowardice.", speaker:"Ougi Oshino"},
-  {text:"No one can replace someone else.", speaker:"Suruga Kanbaru"},
-  {text:"Romance makes people stronger… or useless.", speaker:"Hitagi Senjougahara"},
-  {text:"No matter what happens… it’s still you.", speaker:"Tsubasa Hanekawa"},
-  {text:"Kindness can be selfish.", speaker:"Koyomi Araragi"},
-  {text:"People don’t change. They reveal.", speaker:"Deishuu Kaiki"},
-  {text:"You chose that outcome.", speaker:"Ougi Oshino"},
-  {text:"Some wounds never heal.", speaker:"Deishuu Kaiki"}
+  ["If there is a meeting… there will be a farewell.", "Shinobu Oshino"],
+  ["Averting your eyes isn’t running away.", "Tsubasa Hanekawa"],
+  ["Not trying to be happy is cowardice.", "Ougi Oshino"],
+  ["Kindness can be selfish.", "Koyomi Araragi"],
+  ["People don’t change. They reveal.", "Deishuu Kaiki"],
+  ["Romance makes people stronger… or useless.", "Hitagi Senjougahara"]
 ];
 
 let i = 0;
-
 const main = document.getElementById("quoteMain");
 const speaker = document.getElementById("quoteSpeaker");
 const flash = document.getElementById("flash");
-const title = document.getElementById("title");
 
 function nextQuote() {
   main.classList.remove("show");
   speaker.classList.remove("show");
 
   setTimeout(() => {
-    const q = quotes[i];
-
-    main.innerText = `"${q.text}"`;
-    speaker.innerText = "— " + q.speaker;
+    main.innerText = `"${quotes[i][0]}"`;
+    speaker.innerText = "— " + quotes[i][1];
 
     main.classList.add("show");
 
-    setTimeout(() => {
-      speaker.classList.add("show");
-    }, 400);
+    setTimeout(() => speaker.classList.add("show"), 400);
 
     i = (i + 1) % quotes.length;
-  }, 300);
+  }, 250);
 
-  /* shaft flash cut */
   flash.classList.add("active");
   setTimeout(() => flash.classList.remove("active"), 80);
-
-  /* rare title glitch */
-  if (Math.random() < 0.3) {
-    title.classList.add("glitch");
-    setTimeout(() => title.classList.remove("glitch"), 150);
-  }
 }
 
 setInterval(nextQuote, 3500);
 nextQuote();
 
-/* status rotation */
-const states = ["NODE ACTIVE", "OBSERVING", "STABLE", "SYNCHRONIZED"];
+/* ===== STATUS ===== */
+const states = ["NODE ACTIVE","OBSERVING","STABLE","SYNCHRONIZED"];
 
 setInterval(() => {
   document.getElementById("status").innerText =
-    states[Math.floor(Math.random() * states.length)];
+    states[Math.floor(Math.random()*states.length)];
 }, 4000);
 </script>
 
