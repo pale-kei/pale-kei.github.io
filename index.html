@@ -3,84 +3,94 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KEI // FILE: OLIVER</title>
+<title>KEI // KIZUMONOGATARI FILE</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap');
 
 body {
   margin: 0;
-  background: #07060a;
-  color: #e7e2ff;
   font-family: 'Courier Prime', monospace;
+  color: #f2eaff;
   overflow-x: hidden;
+  background: black;
 }
 
-/* cinematic blood glow */
-@keyframes pulse {
-  0% { filter: brightness(1); }
-  50% { filter: brightness(1.15); }
-  100% { filter: brightness(1); }
+/* 🎞️ GIF BACKGROUND */
+.bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("bg.gif") center/cover no-repeat;
+  z-index: -3;
+  filter: brightness(0.5) contrast(1.2) saturate(1.2);
+  transform: scale(1.05);
 }
 
-/* flicker */
-@keyframes flicker {
-  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
-  20%, 24%, 55% { opacity: 0.35; }
+/* 🩸 DARK OVERLAY */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, rgba(0,0,0,0.2), rgba(0,0,0,0.95));
+  z-index: -2;
 }
 
-/* slow drift */
-@keyframes drift {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-8px); }
-  100% { transform: translateY(0px); }
+/* 🌫 grain */
+.grain {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: url("https://grainy-gradients.vercel.app/noise.svg");
+  opacity: 0.06;
+  z-index: -1;
+  pointer-events: none;
 }
 
-body {
-  animation: pulse 6s infinite;
-}
-
+/* container */
 .container {
-  max-width: 850px;
+  max-width: 900px;
   margin: auto;
-  padding: 60px 20px;
+  padding: 70px 20px;
 }
 
-/* top title */
+/* 🩸 title glitch */
 .title {
   text-align: center;
-  font-size: 26px;
+  font-size: 28px;
   letter-spacing: 3px;
-  animation: flicker 4s infinite;
+  animation: flicker 3.5s infinite;
 }
 
-.subtitle {
-  text-align: center;
-  opacity: 0.6;
-  margin-top: 8px;
-  font-size: 13px;
-}
-
-.line {
-  height: 1px;
-  margin: 30px 0;
-  background: linear-gradient(to right, transparent, #b3001b, transparent);
+@keyframes flicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
+  20%, 24%, 55% { opacity: 0.3; }
 }
 
 /* panels */
 .panel {
   margin-top: 25px;
   padding: 18px;
-  border: 1px solid rgba(179,0,27,0.25);
-  background: rgba(10,10,18,0.55);
+  background: rgba(10,10,20,0.5);
+  border: 1px solid rgba(255,80,120,0.25);
   backdrop-filter: blur(10px);
-  animation: drift 7s ease-in-out infinite;
+  transform: translateY(20px);
+  opacity: 0;
+  transition: all 0.8s ease;
+}
+
+.panel.visible {
+  transform: translateY(0);
+  opacity: 1;
 }
 
 h2 {
-  font-size: 14px;
-  color: #ff3b5c;
-  margin-bottom: 10px;
+  font-size: 13px;
+  color: #ff4d6d;
   letter-spacing: 2px;
 }
 
@@ -90,13 +100,37 @@ p {
   opacity: 0.9;
 }
 
+/* tags */
 .tag {
   display: inline-block;
-  margin: 4px 4px 0 0;
+  margin: 3px;
   padding: 3px 6px;
-  border: 1px solid rgba(255,59,92,0.4);
+  border: 1px solid rgba(255,100,140,0.4);
   font-size: 11px;
-  opacity: 0.9;
+}
+
+/* floating movement */
+.float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+  100% { transform: translateY(0px); }
+}
+
+/* cursor */
+.cursor {
+  display: inline-block;
+  width: 8px;
+  height: 14px;
+  background: #ff4d6d;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
 }
 
 .footer {
@@ -110,97 +144,99 @@ p {
 
 <body>
 
+<div class="bg"></div>
+<div class="overlay"></div>
+<div class="grain"></div>
+
 <div class="container">
 
-  <div class="title">KEI // FILE: OLIVER</div>
-  <div class="subtitle">fragmented character record / cinematic memory index</div>
-
-  <div class="line"></div>
+  <div class="title float">KEI // KIZUMONOGATARI FILE<span class="cursor"></span></div>
 
   <div class="panel">
     <h2>IDENTITY</h2>
     <p>
-      Name: Oliver (Kei)<br>
-      Age: 16<br>
-      Status: Observer / Writer / Listener<br><br>
-      A mind shaped by stories, systems, and silence.
+      Oliver (Kei) — 16<br>
+      Writer / Observer / System thinker<br>
+      A narrative-based perception model of reality.
     </p>
   </div>
 
   <div class="panel">
-    <h2>CREATIVE OUTPUT</h2>
+    <h2>CREATIVE STATE</h2>
     <p>
-      Published short story author.<br>
-      National-level writing recognition.<br>
-      Writes in free time as reflection, not obligation.<br><br>
-      Expression is treated like a system — not random output.
+      Published author. National award winner.<br>
+      Writing functions as structured cognition, not expression.
     </p>
   </div>
 
   <div class="panel">
     <h2>INTEREST SYSTEM</h2>
     <p>
-      Anime / narrative structure / philosophy of memory<br><br>
-
-      <span class="tag">Monogatari Series</span>
+      <span class="tag">Monogatari</span>
       <span class="tag">Kizumonogatari</span>
-      <span class="tag">Mushishi</span>
-      <span class="tag">Legend of the Galactic Heroes</span>
-      <span class="tag">Frieren</span>
-      <span class="tag">Serial Experiments Lain</span>
+      <span class="tag">Lain</span>
       <span class="tag">Evangelion</span>
-      <span class="tag">Madoka Magica</span>
+      <span class="tag">Frieren</span>
       <span class="tag">Utena</span>
-      <span class="tag">Zetsubou Sensei</span>
+      <span class="tag">Madoka</span>
+      <span class="tag">Mushishi</span>
     </p>
   </div>
 
   <div class="panel">
-    <h2>MEDIA MEMORY</h2>
+    <h2>MEDIA CORE</h2>
     <p>
-      Film: <i>Memento</i><br>
-      Games: Caves of Qud, Cogmind, Dwarf Fortress, SnowRunner, No Man’s Sky, The Binding of Isaac, Unreal World<br><br>
-      Preference: systemic complexity, emergent worlds, long-form depth
-    </p>
-  </div>
-
-  <div class="panel">
-    <h2>NOTES</h2>
-    <p>
-      Strong focus in pattern recognition, emotional systems, and narrative analysis.<br>
-      Experiences the world intensely through structure and meaning.<br><br>
-      Social energy is limited, but depth of thought is high.<br>
-      Small circle, high trust preference.
+      Memento / Caves of Qud / Cogmind / Dwarf Fortress / SnowRunner<br>
+      Preference: systemic complexity, emergent simulation, long-form depth.
     </p>
   </div>
 
   <div class="panel">
     <h2>STATUS</h2>
-    <p id="status">initializing memory stream...</p>
+    <p id="status">syncing memory layer...</p>
   </div>
 
-  <div class="line"></div>
-
   <div class="footer">
-    “What is real is what you cannot escape from.” — Kizumonogatari
+    “Pain is just another form of recognition.” — Kizumonogatari
   </div>
 
 </div>
 
 <script>
-const lines = [
-  "memory fragment stabilized",
-  "observation continues",
-  "signal: introspective",
-  "system: active writer state",
-  "identity: self-constructed"
+// 🧠 dynamic status system
+const states = [
+  "memory fragment stabilizing",
+  "observer mode active",
+  "narrative thread detected",
+  "identity coherence fluctuating",
+  "signal locked"
 ];
 
 let i = 0;
 setInterval(() => {
-  document.getElementById("status").innerText = lines[i];
-  i = (i + 1) % lines.length;
-}, 2600);
+  document.getElementById("status").innerText = states[i];
+  i = (i + 1) % states.length;
+}, 2200);
+
+// ✨ scroll reveal animation
+const panels = document.querySelectorAll(".panel");
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("visible");
+    }
+  });
+}, { threshold: 0.15 });
+
+panels.forEach(p => observer.observe(p));
+
+// 🖱 subtle parallax effect
+document.addEventListener("mousemove", (e) => {
+  const x = (e.clientX / window.innerWidth - 0.5) * 10;
+  const y = (e.clientY / window.innerHeight - 0.5) * 10;
+  document.querySelector(".bg").style.transform = `translate(${x}px, ${y}px) scale(1.05)`;
+});
 </script>
 
 </body>
