@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>KEI // MEMORY INTERFACE</title>
+<title>KEI // Interface</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
@@ -16,47 +16,28 @@ body {
   overflow-x: hidden;
 }
 
-/* ===== SHAFT CAMERA DRIFT ===== */
+/* subtle animated drift (VERY light) */
 @keyframes drift {
   0% { transform: translateY(0px); }
-  50% { transform: translateY(-2px); }
+  50% { transform: translateY(-1px); }
   100% { transform: translateY(0px); }
 }
 
 body {
-  animation: drift 6s infinite ease-in-out;
+  animation: drift 8s infinite ease-in-out;
 }
 
-/* ===== BACKGROUND GHOST IMAGE ===== */
+/* background image (low opacity, stable) */
 body::after {
   content: "";
   position: fixed;
   inset: 0;
   background: url("YOUR_KIZU_GIF.gif") center/cover no-repeat;
-  opacity: 0.18;
-  mix-blend-mode: screen;
+  opacity: 0.12;
   pointer-events: none;
 }
 
-/* ===== FLICKER LAYER ===== */
-@keyframes flicker {
-  0%, 96% { opacity: 1; }
-  97% { opacity: 0.4; }
-  98% { opacity: 1; }
-  99% { opacity: 0.2; }
-  100% { opacity: 1; }
-}
-
-#flicker {
-  position: fixed;
-  inset: 0;
-  background: black;
-  animation: flicker 4s infinite;
-  pointer-events: none;
-  z-index: 999;
-}
-
-/* ===== MAIN UI ===== */
+/* main container */
 #container {
   position: relative;
   text-align: center;
@@ -64,95 +45,96 @@ body::after {
   padding: 20px;
 }
 
+/* main text */
 #mainText {
   font-size: 20px;
-  transition: opacity 0.3s;
-  text-shadow: 0 0 10px rgba(255,80,120,0.5);
+  transition: opacity 0.4s ease;
+  text-shadow: 0 0 10px rgba(255,80,120,0.4);
 }
 
+/* sub text */
 #subText {
   font-size: 12px;
   opacity: 0.6;
   margin-top: 10px;
 }
 
-/* ===== FLOATING THOUGHT BOX ===== */
+/* floating thought box */
 #thought {
   position: fixed;
   bottom: 20px;
   left: 20px;
-  max-width: 250px;
+  max-width: 240px;
   font-size: 12px;
   padding: 10px;
-  border: 1px solid rgba(255,80,120,0.4);
+  border: 1px solid rgba(255,80,120,0.35);
   background: rgba(0,0,0,0.6);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(8px);
   opacity: 0;
-  transition: 0.5s;
+  transition: opacity 0.5s ease;
 }
 
-/* ===== SCROLL DISTORTION ===== */
-body.scroll {
-  transform: translateY(var(--y));
+/* very rare micro-flash (NOT full screen) */
+.flash {
+  animation: flash 0.15s ease;
+}
+
+@keyframes flash {
+  0% { filter: brightness(1); }
+  50% { filter: brightness(2); }
+  100% { filter: brightness(1); }
 }
 </style>
 </head>
 
 <body>
 
-<div id="flicker"></div>
-
 <div id="container">
-  <div id="mainText">Initializing memory interface...</div>
-  <div id="subText">system: unstable</div>
+  <div id="mainText">Loading interface...</div>
+  <div id="subText">system stable</div>
 </div>
 
 <div id="thought"></div>
 
 <script>
-/* =========================
-   PSYCHOLOGICAL LAYER CORE
-========================= */
-
 const states = [
   {
-    main: "Identity is not fixed. It is a loop of observations.",
-    sub: "state: reflective recursion"
+    main: "Identity is not fixed. It is interpreted over time.",
+    sub: "state: reflective"
   },
   {
-    main: "You are not changing. You are layering.",
-    sub: "state: structural awareness"
+    main: "Memory changes every time it is recalled.",
+    sub: "state: drift"
   },
   {
-    main: "Memory does not store truth. It stores repetition.",
-    sub: "state: drift memory"
+    main: "You are not becoming someone else. You are updating.",
+    sub: "state: continuity"
   },
   {
-    main: "The self is what remains after contradictions settle.",
-    sub: "state: unstable coherence"
+    main: "Contradiction is part of structure.",
+    sub: "state: coherence"
   },
   {
-    main: "Nothing is being lost. It is only being reinterpreted.",
-    sub: "state: semantic shift"
+    main: "Nothing disappears. It only reorganizes.",
+    sub: "state: persistence"
   }
 ];
 
 const thoughts = [
-  "— You’re overanalyzing again.",
-  "— That’s not wrong. It’s just deep recursion.",
-  "— Keep observing.",
-  "— Don’t stop mid-thought.",
-  "— This is normal for you."
+  "— still thinking.",
+  "— continue.",
+  "— you’re fine.",
+  "— observe it, don’t fight it.",
+  "— it passes through."
 ];
+
+let i = 0;
 
 const mainText = document.getElementById("mainText");
 const subText = document.getElementById("subText");
 const thought = document.getElementById("thought");
 
-let i = 0;
-
-/* ===== MAIN LOOP ===== */
-function update() {
+function updateMain() {
   mainText.style.opacity = 0;
 
   setTimeout(() => {
@@ -160,39 +142,31 @@ function update() {
     mainText.innerText = s.main;
     subText.innerText = s.sub;
     mainText.style.opacity = 1;
-  }, 250);
+  }, 300);
 
   i++;
 }
 
-setInterval(update, 2800);
-update();
+setInterval(updateMain, 3500);
+updateMain();
 
-/* ===== FLOATING THOUGHT SYSTEM ===== */
+/* floating thought system */
 setInterval(() => {
   thought.innerText = thoughts[Math.floor(Math.random() * thoughts.length)];
   thought.style.opacity = 1;
 
   setTimeout(() => {
     thought.style.opacity = 0;
-  }, 2000);
-}, 4500);
+  }, 2200);
+}, 5000);
 
-/* ===== SCROLL DISTORTION ===== */
-window.addEventListener("scroll", () => {
-  const y = window.scrollY * 0.02;
-  document.body.style.setProperty("--y", `${Math.sin(y) * 3}px`);
-});
-
-/* ===== RANDOM FLASH CUTS ===== */
+/* VERY subtle occasional flash */
 setInterval(() => {
-  const flicker = document.getElementById("flicker");
-  flicker.style.opacity = 0.7;
-
+  document.body.classList.add("flash");
   setTimeout(() => {
-    flicker.style.opacity = 0;
-  }, 80);
-}, 6500);
+    document.body.classList.remove("flash");
+  }, 150);
+}, 9000);
 </script>
 
 </body>
